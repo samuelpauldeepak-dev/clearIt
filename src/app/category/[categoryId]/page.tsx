@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { 
@@ -174,6 +175,48 @@ const categoryData: Record<string, {
   }
 };
 
+export async function generateMetadata({ params }: { params: { categoryId: string } }): Promise<Metadata> {
+  const { categoryId } = params;
+  const category = categoryData[categoryId];
+
+  if (!category) {
+    return {
+      title: "Category Not Found",
+    };
+  }
+
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://clearit.spdic.com';
+  const categoryUrl = `${baseUrl}/category/${categoryId}`;
+
+  return {
+    title: `${category.name} - ClearIt Free Online Tools`,
+    description: `${category.description}. Use our free ${category.name.toLowerCase()} to ${category.tools.map(t => t.name.toLowerCase()).join(', ')}. All tools work instantly in your browser with no uploads required.`,
+    keywords: [
+      `clearit ${category.name.toLowerCase()}`,
+      `${category.name.toLowerCase()} online`,
+      `free ${category.name.toLowerCase()}`,
+      ...category.tools.map(t => t.name.toLowerCase()),
+      ...category.tools.flatMap(t => t.features.map(f => f.toLowerCase())),
+      "online tools",
+      "browser tools",
+      "privacy-first tools"
+    ],
+    openGraph: {
+      title: `${category.name} - ClearIt Free Online Tools`,
+      description: `${category.description}. Free ${category.name.toLowerCase()} that work instantly in your browser.`,
+      url: categoryUrl,
+      type: "website",
+    },
+    twitter: {
+      title: `${category.name} - ClearIt`,
+      description: category.description,
+    },
+    alternates: {
+      canonical: categoryUrl,
+    },
+  };
+}
+
 interface CategoryPageProps {
   params: {
     categoryId: string;
@@ -189,104 +232,152 @@ export default function CategoryPage({ params }: CategoryPageProps) {
   }
 
   const Icon = category.icon;
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://clearit.spdic.com';
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": `${category.name} - ClearIt`,
+    "description": category.description,
+    "url": `${baseUrl}/category/${categoryId}`,
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": category.tools.map((tool, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": tool.name,
+        "description": tool.description,
+        "url": `${baseUrl}/tool/${categoryId}/${tool.id}`
+      }))
+    }
+  };
+
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": baseUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": category.name,
+        "item": `${baseUrl}/category/${categoryId}`
+      }
+    ]
+  };
 
   return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-      {/* Category Header */}
-      <div className="space-y-4">
-        <Link href="/">
-          <Button variant="ghost" className="gap-2 mb-4">
-            <ArrowRight className="h-4 w-4 rotate-180" />
-            Back to Categories
-          </Button>
-        </Link>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
+      <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
+        {/* Category Header */}
+        <div className="space-y-4">
+          <Link href="/">
+            <Button variant="ghost" className="gap-2 mb-4">
+              <ArrowRight className="h-4 w-4 rotate-180" />
+              Back to Categories
+            </Button>
+          </Link>
 
-        <div className="flex items-center gap-4">
-          <div 
-            className="w-16 h-16 rounded-xl flex items-center justify-center"
-            style={{ backgroundColor: `hsl(var(--category-${category.color}) / 0.1)` }}
-          >
-            <Icon 
-              className="h-8 w-8" 
-              style={{ color: `hsl(var(--category-${category.color}))` }}
-            />
-          </div>
-          <div>
-            <h1 className="text-4xl font-bold text-foreground">{category.name}</h1>
-            <p className="text-lg text-muted-foreground mt-2">{category.description}</p>
+          <div className="flex items-center gap-4">
+            <div 
+              className="w-16 h-16 rounded-xl flex items-center justify-center"
+              style={{ backgroundColor: `hsl(var(--category-${category.color}) / 0.1)` }}
+            >
+              <Icon 
+                className="h-8 w-8" 
+                style={{ color: `hsl(var(--category-${category.color}))` }}
+              />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold text-foreground">{category.name}</h1>
+              <p className="text-lg text-muted-foreground mt-2">{category.description}</p>
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Philosophy */}
-      <Card className="border-l-4" style={{ borderLeftColor: `hsl(var(--category-${category.color}))` }}>
-        <CardContent className="pt-6">
-          <p className="text-base text-muted-foreground leading-relaxed">
-            {category.philosophy}
-          </p>
-        </CardContent>
-      </Card>
+        {/* Philosophy */}
+        <Card className="border-l-4" style={{ borderLeftColor: `hsl(var(--category-${category.color}))` }}>
+          <CardContent className="pt-6">
+            <p className="text-base text-muted-foreground leading-relaxed">
+              {category.philosophy}
+            </p>
+          </CardContent>
+        </Card>
 
-      {/* Tools Grid */}
-      <div className="space-y-4">
-        <h2 className="text-2xl font-bold text-foreground">Available Tools</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {category.tools.map((tool) => (
-            <Link key={tool.id} href={`/tool/${categoryId}/${tool.id}`}>
-              <Card className="h-full border-2 border-border hover:border-[hsl(var(--category-${category.color}))] hover:shadow-lg transition-smooth group">
-                <CardHeader>
-                  <div className="flex items-start justify-between mb-2">
-                    <CardTitle className="text-xl">{tool.name}</CardTitle>
-                    {tool.popular && (
-                      <Badge 
-                        variant="secondary"
-                        className="gap-1"
-                        style={{ 
-                          backgroundColor: `hsl(var(--category-${category.color}) / 0.1)`,
-                          color: `hsl(var(--category-${category.color}))`,
-                          borderColor: `hsl(var(--category-${category.color}) / 0.2)`
-                        }}
-                      >
-                        <TrendingUp className="h-3 w-3" />
-                        Popular
-                      </Badge>
-                    )}
-                  </div>
-                  <CardDescription className="text-base">
-                    {tool.description}
-                  </CardDescription>
-                </CardHeader>
-                
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <p className="text-sm font-medium text-muted-foreground">Key features:</p>
-                    <ul className="space-y-1">
-                      {tool.features.map((feature) => (
-                        <li key={feature} className="text-sm text-muted-foreground flex items-center gap-2">
-                          <Star className="h-3 w-3" style={{ color: `hsl(var(--category-${category.color}))` }} />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+        {/* Tools Grid */}
+        <div className="space-y-4">
+          <h2 className="text-2xl font-bold text-foreground">Available Tools</h2>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {category.tools.map((tool) => (
+              <Link key={tool.id} href={`/tool/${categoryId}/${tool.id}`}>
+                <Card className="h-full border-2 border-border hover:border-[hsl(var(--category-${category.color}))] hover:shadow-lg transition-smooth group">
+                  <CardHeader>
+                    <div className="flex items-start justify-between mb-2">
+                      <CardTitle className="text-xl">{tool.name}</CardTitle>
+                      {tool.popular && (
+                        <Badge 
+                          variant="secondary"
+                          className="gap-1"
+                          style={{ 
+                            backgroundColor: `hsl(var(--category-${category.color}) / 0.1)`,
+                            color: `hsl(var(--category-${category.color}))`,
+                            borderColor: `hsl(var(--category-${category.color}) / 0.2)`
+                          }}
+                        >
+                          <TrendingUp className="h-3 w-3" />
+                          Popular
+                        </Badge>
+                      )}
+                    </div>
+                    <CardDescription className="text-base">
+                      {tool.description}
+                    </CardDescription>
+                  </CardHeader>
                   
-                  <Button 
-                    className="w-full justify-between group-hover:translate-x-1 transition-smooth"
-                    style={{ 
-                      backgroundColor: `hsl(var(--category-${category.color}))`,
-                      color: `hsl(var(--category-${category.color}-foreground))`
-                    }}
-                  >
-                    Launch Tool
-                    <ArrowRight className="h-4 w-4" />
-                  </Button>
-                </CardContent>
-              </Card>
-            </Link>
-          ))}
+                  <CardContent className="space-y-4">
+                    <div className="space-y-2">
+                      <p className="text-sm font-medium text-muted-foreground">Key features:</p>
+                      <ul className="space-y-1">
+                        {tool.features.map((feature) => (
+                          <li key={feature} className="text-sm text-muted-foreground flex items-center gap-2">
+                            <Star className="h-3 w-3" style={{ color: `hsl(var(--category-${category.color}))` }} />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+                    <Button 
+                      className="w-full justify-between group-hover:translate-x-1 transition-smooth"
+                      style={{ 
+                        backgroundColor: `hsl(var(--category-${category.color}))`,
+                        color: `hsl(var(--category-${category.color}-foreground))`
+                      }}
+                    >
+                      Launch Tool
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { 
   Search,
@@ -17,6 +18,9 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Separator } from '@/components/ui/separator';
+
+// Note: Since this is a client component, metadata is handled via layout or head
+// For now, we'll add it via a separate metadata export in a layout file
 
 interface Documentation {
   id: string;
@@ -246,183 +250,231 @@ const documentation: Documentation[] = [
 
 export default function DocumentationPage() {
   const [searchQuery, setSearchQuery] = useState('');
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://clearit.spdic.com';
 
   const filteredDocs = documentation.filter(doc => 
     doc.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
     doc.overview.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Documentation for ClearIt",
+    "description": "Comprehensive guides for every ClearIt tool. Learn how to use each tool effectively, discover best practices, and troubleshoot common issues.",
+    "url": `${baseUrl}/documentation`,
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": documentation.map((doc, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": doc.title,
+        "description": doc.overview,
+        "url": `${baseUrl}/tool/${doc.category}/${doc.id}`
+      }))
+    }
+  };
+
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": baseUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Documentation",
+        "item": `${baseUrl}/documentation`
+      }
+    ]
+  };
+
   return (
-    <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
-      {/* Page Header */}
-      <div className="text-center space-y-4">
-        <Badge variant="secondary" className="mb-2">
-          <BookOpen className="h-3 w-3 mr-1" />
-          Documentation
-        </Badge>
-        <h1 className="text-5xl font-bold text-foreground">
-          Tool Documentation
-        </h1>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          Comprehensive guides for every ClearIt tool. Learn how to use each tool effectively, 
-          discover best practices, and troubleshoot common issues.
-        </p>
-      </div>
-
-      {/* Search */}
-      <div className="max-w-2xl mx-auto">
-        <div className="relative">
-          <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-          <Input
-            type="text"
-            placeholder="Search documentation..."
-            className="pl-12 h-12 text-base"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
+      <div className="max-w-7xl mx-auto space-y-8 animate-fade-in">
+        {/* Page Header */}
+        <div className="text-center space-y-4">
+          <Badge variant="secondary" className="mb-2">
+            <BookOpen className="h-3 w-3 mr-1" />
+            Documentation
+          </Badge>
+          <h1 className="text-5xl font-bold text-foreground">
+            Tool Documentation
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Comprehensive guides for every ClearIt tool. Learn how to use each tool effectively, 
+            discover best practices, and troubleshoot common issues.
+          </p>
         </div>
-      </div>
 
-      {/* Documentation Cards */}
-      <div className="space-y-8">
-        {filteredDocs.length === 0 ? (
-          <Card>
-            <CardContent className="py-12 text-center">
-              <p className="text-muted-foreground">No documentation found matching your search.</p>
-            </CardContent>
-          </Card>
-        ) : (
-          filteredDocs.map((doc) => (
-            <Card key={doc.id} className="overflow-hidden">
-              <CardHeader className="border-b border-border bg-muted/30">
-                <div className="flex items-center justify-between">
-                  <div>
-                    <CardTitle className="text-2xl">{doc.title}</CardTitle>
-                    <CardDescription className="text-base mt-2">{doc.overview}</CardDescription>
-                  </div>
-                  <Link href={`/tool/${doc.category}/${doc.id}`}>
-                    <Button variant="outline" className="gap-2">
-                      Launch Tool
-                      <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  </Link>
-                </div>
-              </CardHeader>
+        {/* Search */}
+        <div className="max-w-2xl mx-auto">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search documentation..."
+              className="pl-12 h-12 text-base"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+        </div>
 
-              <CardContent className="pt-6 space-y-8">
-                {/* When to Use */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Lightbulb className="h-4 w-4 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground">When to Use</h3>
-                  </div>
-                  <ul className="space-y-2 ml-10">
-                    {doc.whenToUse.map((use, idx) => (
-                      <li key={idx} className="flex items-start gap-2 text-muted-foreground">
-                        <CheckCircle2 className="h-5 w-5 text-success shrink-0 mt-0.5" />
-                        <span>{use}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <Separator />
-
-                {/* Step-by-Step Usage */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <BookOpen className="h-4 w-4 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground">Step-by-Step Usage</h3>
-                  </div>
-                  <div className="ml-10 space-y-4">
-                    {doc.usage.map((step, idx) => (
-                      <div key={idx} className="flex gap-4">
-                        <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 text-primary-foreground text-sm font-bold">
-                          {idx + 1}
-                        </div>
-                        <div className="flex-1 pt-1">
-                          <p className="font-medium text-foreground">{step.step}</p>
-                          <p className="text-sm text-muted-foreground mt-1">{step.detail}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <Separator />
-
-                {/* Tips & Best Practices */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
-                      <CheckCircle2 className="h-4 w-4 text-success" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground">Tips & Best Practices</h3>
-                  </div>
-                  <div className="ml-10 space-y-2">
-                    {doc.tips.map((tip, idx) => (
-                      <div key={idx} className="flex items-start gap-3 p-3 bg-success/5 rounded-lg border border-success/20">
-                        <Info className="h-5 w-5 text-success shrink-0 mt-0.5" />
-                        <p className="text-sm text-muted-foreground">{tip}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <Separator />
-
-                {/* Limitations */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-warning/10 flex items-center justify-center">
-                      <AlertCircle className="h-4 w-4 text-warning" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground">Limitations</h3>
-                  </div>
-                  <div className="ml-10 space-y-2">
-                    {doc.limitations.map((limitation, idx) => (
-                      <div key={idx} className="flex items-start gap-3 p-3 bg-warning/5 rounded-lg border border-warning/20">
-                        <AlertCircle className="h-5 w-5 text-warning shrink-0 mt-0.5" />
-                        <p className="text-sm text-muted-foreground">{limitation}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                <Separator />
-
-                {/* FAQ */}
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
-                      <Info className="h-4 w-4 text-primary" />
-                    </div>
-                    <h3 className="text-lg font-semibold text-foreground">Frequently Asked Questions</h3>
-                  </div>
-                  <div className="ml-10">
-                    <Accordion type="single" collapsible className="w-full">
-                      {doc.faqs.map((faq, idx) => (
-                        <AccordionItem key={idx} value={`faq-${idx}`}>
-                          <AccordionTrigger className="text-left hover:text-primary">
-                            {faq.question}
-                          </AccordionTrigger>
-                          <AccordionContent className="text-muted-foreground">
-                            {faq.answer}
-                          </AccordionContent>
-                        </AccordionItem>
-                      ))}
-                    </Accordion>
-                  </div>
-                </div>
+        {/* Documentation Cards */}
+        <div className="space-y-8">
+          {filteredDocs.length === 0 ? (
+            <Card>
+              <CardContent className="py-12 text-center">
+                <p className="text-muted-foreground">No documentation found matching your search.</p>
               </CardContent>
             </Card>
-          ))
-        )}
+          ) : (
+            filteredDocs.map((doc) => (
+              <Card key={doc.id} className="overflow-hidden">
+                <CardHeader className="border-b border-border bg-muted/30">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <CardTitle className="text-2xl">{doc.title}</CardTitle>
+                      <CardDescription className="text-base mt-2">{doc.overview}</CardDescription>
+                    </div>
+                    <Link href={`/tool/${doc.category}/${doc.id}`}>
+                      <Button variant="outline" className="gap-2">
+                        Launch Tool
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="pt-6 space-y-8">
+                  {/* When to Use */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Lightbulb className="h-4 w-4 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground">When to Use</h3>
+                    </div>
+                    <ul className="space-y-2 ml-10">
+                      {doc.whenToUse.map((use, idx) => (
+                        <li key={idx} className="flex items-start gap-2 text-muted-foreground">
+                          <CheckCircle2 className="h-5 w-5 text-success shrink-0 mt-0.5" />
+                          <span>{use}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <Separator />
+
+                  {/* Step-by-Step Usage */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <BookOpen className="h-4 w-4 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground">Step-by-Step Usage</h3>
+                    </div>
+                    <div className="ml-10 space-y-4">
+                      {doc.usage.map((step, idx) => (
+                        <div key={idx} className="flex gap-4">
+                          <div className="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 text-primary-foreground text-sm font-bold">
+                            {idx + 1}
+                          </div>
+                          <div className="flex-1 pt-1">
+                            <p className="font-medium text-foreground">{step.step}</p>
+                            <p className="text-sm text-muted-foreground mt-1">{step.detail}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Tips & Best Practices */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
+                        <CheckCircle2 className="h-4 w-4 text-success" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground">Tips & Best Practices</h3>
+                    </div>
+                    <div className="ml-10 space-y-2">
+                      {doc.tips.map((tip, idx) => (
+                        <div key={idx} className="flex items-start gap-3 p-3 bg-success/5 rounded-lg border border-success/20">
+                          <Info className="h-5 w-5 text-success shrink-0 mt-0.5" />
+                          <p className="text-sm text-muted-foreground">{tip}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* Limitations */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-warning/10 flex items-center justify-center">
+                        <AlertCircle className="h-4 w-4 text-warning" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground">Limitations</h3>
+                    </div>
+                    <div className="ml-10 space-y-2">
+                      {doc.limitations.map((limitation, idx) => (
+                        <div key={idx} className="flex items-start gap-3 p-3 bg-warning/5 rounded-lg border border-warning/20">
+                          <AlertCircle className="h-5 w-5 text-warning shrink-0 mt-0.5" />
+                          <p className="text-sm text-muted-foreground">{limitation}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <Separator />
+
+                  {/* FAQ */}
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center">
+                        <Info className="h-4 w-4 text-primary" />
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground">Frequently Asked Questions</h3>
+                    </div>
+                    <div className="ml-10">
+                      <Accordion type="single" collapsible className="w-full">
+                        {doc.faqs.map((faq, idx) => (
+                          <AccordionItem key={idx} value={`faq-${idx}`}>
+                            <AccordionTrigger className="text-left hover:text-primary">
+                              {faq.question}
+                            </AccordionTrigger>
+                            <AccordionContent className="text-muted-foreground">
+                              {faq.answer}
+                            </AccordionContent>
+                          </AccordionItem>
+                        ))}
+                      </Accordion>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import { 
   FileText,
@@ -18,6 +19,37 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
+
+export const metadata: Metadata = {
+  title: "Solutions for ClearIt - Workflow Solutions for Every Professional",
+  description: "Discover how ClearIt solves real problems for content creators, business professionals, students, educators, and developers. Learn about workflow solutions, tool recommendations, and step-by-step guides for using ClearIt tools effectively.",
+  keywords: [
+    "clearit solutions",
+    "solutions for clearit",
+    "clearit workflow",
+    "content creator tools",
+    "business document tools",
+    "student tools",
+    "developer tools",
+    "clearit use cases",
+    "clearit tutorials",
+    "workflow optimization",
+    "digital tools solutions"
+  ],
+  openGraph: {
+    title: "Solutions for ClearIt - Workflow Solutions for Every Professional",
+    description: "Discover how ClearIt solves real problems for professionals, creators, students, and developers.",
+    url: "/solutions",
+    type: "website",
+  },
+  twitter: {
+    title: "Solutions for ClearIt",
+    description: "Discover how ClearIt solves real problems for professionals, creators, students, and developers.",
+  },
+  alternates: {
+    canonical: "/solutions",
+  },
+};
 
 const solutions = [
   {
@@ -107,162 +139,210 @@ const solutions = [
 ];
 
 export default function SolutionsPage() {
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://clearit.spdic.com';
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Solutions for ClearIt",
+    "description": "Workflow solutions and use cases for ClearIt tools",
+    "url": `${baseUrl}/solutions`,
+    "mainEntity": {
+      "@type": "ItemList",
+      "itemListElement": solutions.map((solution, index) => ({
+        "@type": "ListItem",
+        "position": index + 1,
+        "name": solution.title,
+        "description": solution.solution
+      }))
+    }
+  };
+
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": baseUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Solutions",
+        "item": `${baseUrl}/solutions`
+      }
+    ]
+  };
+
   return (
-    <div className="max-w-7xl mx-auto space-y-12 animate-fade-in">
-      {/* Page Header */}
-      <div className="text-center space-y-4">
-        <Badge variant="secondary" className="mb-2">
-          <Zap className="h-3 w-3 mr-1" />
-          Solutions
-        </Badge>
-        <h1 className="text-5xl font-bold text-foreground">
-          Solutions for Every Workflow
-        </h1>
-        <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-          Discover how ClearIt solves real problems for professionals, creators, students, and developers. 
-          No matter your role, we have tools to streamline your digital workflow.
-        </p>
-      </div>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
+      <div className="max-w-7xl mx-auto space-y-12 animate-fade-in">
+        {/* Page Header */}
+        <div className="text-center space-y-4">
+          <Badge variant="secondary" className="mb-2">
+            <Zap className="h-3 w-3 mr-1" />
+            Solutions
+          </Badge>
+          <h1 className="text-5xl font-bold text-foreground">
+            Solutions for Every Workflow
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            Discover how ClearIt solves real problems for professionals, creators, students, and developers. 
+            No matter your role, we have tools to streamline your digital workflow.
+          </p>
+        </div>
 
-      {/* Solutions */}
-      <div className="space-y-16">
-        {solutions.map((solution, index) => {
-          const Icon = solution.icon;
-          
-          return (
-            <div key={solution.id} className="space-y-6">
-              {index > 0 && <Separator className="my-12" />}
-              
-              {/* Solution Header */}
-              <div className="flex items-start gap-4">
-                <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
-                  <Icon className="h-7 w-7 text-primary" />
-                </div>
-                <div>
-                  <h2 className="text-3xl font-bold text-foreground">{solution.title}</h2>
-                  <p className="text-lg text-muted-foreground mt-1">{solution.subtitle}</p>
-                </div>
-              </div>
-
-              {/* Solution Content */}
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                {/* Left Column */}
-                <div className="space-y-6">
-                  {/* The Problem */}
-                  <Card className="border-l-4 border-l-destructive">
-                    <CardHeader>
-                      <CardTitle className="text-lg">The Problem</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground leading-relaxed">{solution.problem}</p>
-                    </CardContent>
-                  </Card>
-
-                  {/* Who It's For */}
-                  <Card className="border-l-4 border-l-primary">
-                    <CardHeader>
-                      <CardTitle className="text-lg">Who It's For</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground leading-relaxed">{solution.whoFor}</p>
-                    </CardContent>
-                  </Card>
-
-                  {/* How ClearIt Helps */}
-                  <Card className="border-l-4 border-l-success">
-                    <CardHeader>
-                      <CardTitle className="text-lg">How ClearIt Helps</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <p className="text-muted-foreground leading-relaxed">{solution.solution}</p>
-                    </CardContent>
-                  </Card>
+        {/* Solutions */}
+        <div className="space-y-16">
+          {solutions.map((solution, index) => {
+            const Icon = solution.icon;
+            
+            return (
+              <div key={solution.id} className="space-y-6">
+                {index > 0 && <Separator className="my-12" />}
+                
+                {/* Solution Header */}
+                <div className="flex items-start gap-4">
+                  <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
+                    <Icon className="h-7 w-7 text-primary" />
+                  </div>
+                  <div>
+                    <h2 className="text-3xl font-bold text-foreground">{solution.title}</h2>
+                    <p className="text-lg text-muted-foreground mt-1">{solution.subtitle}</p>
+                  </div>
                 </div>
 
-                {/* Right Column */}
-                <div className="space-y-6">
-                  {/* Tools Involved */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Tools Involved</CardTitle>
-                      <CardDescription>Key tools that solve this problem</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      {solution.tools.map((tool) => {
-                        const ToolIcon = tool.icon;
-                        return (
-                          <Link 
-                            key={tool.name} 
-                            href={`/category/${tool.category}`}
-                            className="block"
-                          >
-                            <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-smooth group">
-                              <div 
-                                className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                                style={{ backgroundColor: `hsl(var(--category-${tool.category}) / 0.1)` }}
-                              >
-                                <ToolIcon 
-                                  className="h-5 w-5" 
-                                  style={{ color: `hsl(var(--category-${tool.category}))` }}
-                                />
+                {/* Solution Content */}
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  {/* Left Column */}
+                  <div className="space-y-6">
+                    {/* The Problem */}
+                    <Card className="border-l-4 border-l-destructive">
+                      <CardHeader>
+                        <CardTitle className="text-lg">The Problem</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-muted-foreground leading-relaxed">{solution.problem}</p>
+                      </CardContent>
+                    </Card>
+
+                    {/* Who It's For */}
+                    <Card className="border-l-4 border-l-primary">
+                      <CardHeader>
+                        <CardTitle className="text-lg">Who It's For</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-muted-foreground leading-relaxed">{solution.whoFor}</p>
+                      </CardContent>
+                    </Card>
+
+                    {/* How ClearIt Helps */}
+                    <Card className="border-l-4 border-l-success">
+                      <CardHeader>
+                        <CardTitle className="text-lg">How ClearIt Helps</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <p className="text-muted-foreground leading-relaxed">{solution.solution}</p>
+                      </CardContent>
+                    </Card>
+                  </div>
+
+                  {/* Right Column */}
+                  <div className="space-y-6">
+                    {/* Tools Involved */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-lg">Tools Involved</CardTitle>
+                        <CardDescription>Key tools that solve this problem</CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-3">
+                        {solution.tools.map((tool) => {
+                          const ToolIcon = tool.icon;
+                          return (
+                            <Link 
+                              key={tool.name} 
+                              href={`/category/${tool.category}`}
+                              className="block"
+                            >
+                              <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-smooth group">
+                                <div 
+                                  className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
+                                  style={{ backgroundColor: `hsl(var(--category-${tool.category}) / 0.1)` }}
+                                >
+                                  <ToolIcon 
+                                    className="h-5 w-5" 
+                                    style={{ color: `hsl(var(--category-${tool.category}))` }}
+                                  />
+                                </div>
+                                <span className="flex-1 font-medium text-foreground">{tool.name}</span>
+                                <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-1 transition-smooth" />
                               </div>
-                              <span className="flex-1 font-medium text-foreground">{tool.name}</span>
-                              <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-1 transition-smooth" />
-                            </div>
-                          </Link>
-                        );
-                      })}
-                    </CardContent>
-                  </Card>
+                            </Link>
+                          );
+                        })}
+                      </CardContent>
+                    </Card>
 
-                  {/* Example Workflow */}
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-lg">Example Workflow</CardTitle>
-                      <CardDescription>Step-by-step process</CardDescription>
-                    </CardHeader>
-                    <CardContent>
-                      <ol className="space-y-3">
-                        {solution.workflow.map((step, idx) => (
-                          <li key={idx} className="flex items-start gap-3">
-                            <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center shrink-0 text-primary-foreground text-xs font-bold">
-                              {idx + 1}
-                            </div>
-                            <p className="text-muted-foreground flex-1 pt-0.5">{step}</p>
-                          </li>
-                        ))}
-                      </ol>
-                    </CardContent>
-                  </Card>
+                    {/* Example Workflow */}
+                    <Card>
+                      <CardHeader>
+                        <CardTitle className="text-lg">Example Workflow</CardTitle>
+                        <CardDescription>Step-by-step process</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <ol className="space-y-3">
+                          {solution.workflow.map((step, idx) => (
+                            <li key={idx} className="flex items-start gap-3">
+                              <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center shrink-0 text-primary-foreground text-xs font-bold">
+                                {idx + 1}
+                              </div>
+                              <p className="text-muted-foreground flex-1 pt-0.5">{step}</p>
+                            </li>
+                          ))}
+                        </ol>
+                      </CardContent>
+                    </Card>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </div>
+            );
+          })}
+        </div>
 
-      {/* CTA Section */}
-      <Card className="bg-primary/5 border-primary/20">
-        <CardContent className="py-12 text-center space-y-6">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10">
-            <CheckCircle2 className="h-8 w-8 text-primary" />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-foreground mb-2">
-              Ready to solve your digital problems?
-            </h2>
-            <p className="text-muted-foreground">
-              Start using ClearIt tools now. No sign-up required.
-            </p>
-          </div>
-          <Link href="/">
-            <Button size="lg" className="bg-primary hover:bg-primary-hover">
-              Browse All Tools
-              <ArrowRight className="h-5 w-5 ml-2" />
-            </Button>
-          </Link>
-        </CardContent>
-      </Card>
-    </div>
+        {/* CTA Section */}
+        <Card className="bg-primary/5 border-primary/20">
+          <CardContent className="py-12 text-center space-y-6">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10">
+              <CheckCircle2 className="h-8 w-8 text-primary" />
+            </div>
+            <div>
+              <h2 className="text-2xl font-bold text-foreground mb-2">
+                Ready to solve your digital problems?
+              </h2>
+              <p className="text-muted-foreground">
+                Start using ClearIt tools now. No sign-up required.
+              </p>
+            </div>
+            <Link href="/">
+              <Button size="lg" className="bg-primary hover:bg-primary-hover">
+                Browse All Tools
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 }

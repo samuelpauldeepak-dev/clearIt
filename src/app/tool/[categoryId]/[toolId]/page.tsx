@@ -123,8 +123,8 @@ const toolDetails: Record<string, {
 
 export default function ToolPage() {
   const params = useParams();
-  const categoryId = params.categoryId as string;
-  const toolId = params.toolId as string;
+  const categoryId = (params?.categoryId as string) || '';
+  const toolId = (params?.toolId as string) || '';
   const tool = toolDetails[toolId] || { ...toolDetails['default'], name: toolId };
   const Icon = iconMap[tool.category] || FileText;
   
@@ -217,8 +217,62 @@ export default function ToolPage() {
     toast.info('Ready for new file');
   };
 
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://clearit.spdic.com';
+  const toolUrl = `${baseUrl}/tool/${categoryId}/${toolId}`;
+
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": tool.name,
+    "description": tool.description,
+    "url": toolUrl,
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "featureList": tool.capabilities,
+    "fileFormat": tool.acceptedFormats.join(", ")
+  };
+
+  const breadcrumbStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": baseUrl
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": `${categoryId} Tools`,
+        "item": `${baseUrl}/category/${categoryId}`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": tool.name,
+        "item": toolUrl
+      }
+    ]
+  };
+
   return (
-    <div className="max-w-7xl mx-auto space-y-6 animate-fade-in">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
+      <div className="max-w-7xl mx-auto space-y-6 animate-fade-in">
       {/* Breadcrumb */}
       <div className="flex items-center gap-2 text-sm text-muted-foreground">
         <Link href="/" className="hover:text-foreground transition-smooth">Home</Link>
@@ -552,5 +606,6 @@ export default function ToolPage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
