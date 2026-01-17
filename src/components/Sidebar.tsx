@@ -82,7 +82,7 @@ interface SidebarProps {
 }
 
 export default function Sidebar({ isOpen }: SidebarProps) {
-  const pathname = usePathname();
+  const pathname = usePathname() || '';
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
 
   const toggleCategory = (categoryId: string) => {

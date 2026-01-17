@@ -115,8 +115,8 @@ const categoryNames: Record<string, string> = {
   web: 'Web Tools',
 };
 
-export async function generateMetadata({ params }: { params: { categoryId: string; toolId: string } }): Promise<Metadata> {
-  const { categoryId, toolId } = params;
+export async function generateMetadata({ params }: { params: Promise<{ categoryId: string; toolId: string }> }): Promise<Metadata> {
+  const { categoryId, toolId } = await params;
   const tool = toolDetails[toolId] || {
     name: toolId,
     category: categoryId,

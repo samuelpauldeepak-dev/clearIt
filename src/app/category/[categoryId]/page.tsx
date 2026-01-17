@@ -175,8 +175,8 @@ const categoryData: Record<string, {
   }
 };
 
-export async function generateMetadata({ params }: { params: { categoryId: string } }): Promise<Metadata> {
-  const { categoryId } = params;
+export async function generateMetadata({ params }: { params: Promise<{ categoryId: string }> }): Promise<Metadata> {
+  const { categoryId } = await params;
   const category = categoryData[categoryId];
 
   if (!category) {
@@ -218,13 +218,13 @@ export async function generateMetadata({ params }: { params: { categoryId: strin
 }
 
 interface CategoryPageProps {
-  params: {
+  params: Promise<{
     categoryId: string;
-  };
+  }>;
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
-  const { categoryId } = params;
+export default async function CategoryPage({ params }: CategoryPageProps) {
+  const { categoryId } = await params;
   const category = categoryData[categoryId];
 
   if (!category) {
