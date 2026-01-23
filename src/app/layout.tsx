@@ -5,12 +5,15 @@ import Layout from "@/components/Layout";
 import "@/app/globals.css";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || 'https://clearit.spdic.com'),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_APP_URL || "https://clearit.spdic.com",
+  ),
   title: {
     default: "ClearIt - Clear digital problems instantly",
-    template: "%s | ClearIt"
+    template: "%s | ClearIt",
   },
-  description: "Fix files, clean data, convert formats — without friction. Free online tools for text, images, PDFs, data, and web development.",
+  description:
+    "Fix files, clean data, convert formats — without friction. Free online tools for text, images, PDFs, data, and web development.",
   keywords: [
     "online tools",
     "file converter",
@@ -21,7 +24,7 @@ export const metadata: Metadata = {
     "web tools",
     "free tools",
     "browser tools",
-    "privacy-first tools"
+    "privacy-first tools",
   ],
   authors: [{ name: "ClearIt" }],
   creator: "ClearIt",
@@ -32,23 +35,24 @@ export const metadata: Metadata = {
     telephone: false,
   },
   icons: {
-    icon: '/favicon.ico',
-    shortcut: '/favicon.ico',
-    apple: '/favicon.ico',
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
   },
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: process.env.NEXT_PUBLIC_APP_URL || 'https://clearit.spdic.com',
+    url: process.env.NEXT_PUBLIC_APP_URL || "https://clearit.spdic.com",
     siteName: "ClearIt",
     title: "ClearIt - Clear digital problems instantly",
-    description: "Fix files, clean data, convert formats — without friction. Free online tools for text, images, PDFs, data, and web development.",
+    description:
+      "Fix files, clean data, convert formats — without friction. Free online tools for text, images, PDFs, data, and web development.",
     images: [
       {
-        url: '/og-image.png',
+        url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: 'ClearIt - Digital Tools',
+        alt: "ClearIt - Digital Tools",
       },
     ],
   },
@@ -56,7 +60,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ClearIt - Clear digital problems instantly",
     description: "Fix files, clean data, convert formats — without friction.",
-    images: ['/og-image.png'],
+    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -64,9 +68,9 @@ export const metadata: Metadata = {
     googleBot: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
     },
   },
   verification: {
@@ -75,6 +79,9 @@ export const metadata: Metadata = {
     // yandex: 'your-yandex-verification-code',
   },
 };
+
+import { AuthProvider } from "@/hooks/use-auth";
+import { GlobalUIProvider } from "@/components/GlobalUIProvider";
 
 export default function RootLayout({
   children,
@@ -85,8 +92,12 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider defaultTheme="light" storageKey="clearit-theme">
-          <Layout>{children}</Layout>
-          <Toaster position="top-right" />
+          <AuthProvider>
+            <GlobalUIProvider>
+              <Layout>{children}</Layout>
+              <Toaster position="top-right" closeButton />
+            </GlobalUIProvider>
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>
