@@ -65,7 +65,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
             aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
             aria-expanded={sidebarOpen}
           >
-            <Menu className="h-5 w-5" />
+            <Menu className="h-5 w-5 text-foreground" />
           </Button>
 
           {/* Logo */}
@@ -73,7 +73,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
             {/* <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-lg">C</span>
             </div> */}
-            <span className="text-2xl font-bold text-primary bg-gradient-to-t  tracking-tighter ">
+            <span className="text-xl md:text-2xl lg:text-3xl font-bold text-primary bg-gradient-to-t  tracking-tighter ">
               ClearIt
             </span>
           </Link>
@@ -117,7 +117,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
             className="lg:hidden hover:bg-muted"
             aria-label="Open search"
           >
-            <Search className="h-5 w-5" />
+            <Search className="h-5 w-5 text-foreground" />
           </Button>
 
           {/* Theme Toggle */}
@@ -129,9 +129,9 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
             aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}
           >
             {theme === "light" ? (
-              <Moon className="h-5 w-5" />
+              <Moon className="h-5 w-5 text-foreground" />
             ) : (
-              <Sun className="h-5 w-5" />
+              <Sun className="h-5 w-5 text-foreground" />
             )}
           </Button>
 
@@ -139,11 +139,16 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="gap-2">
-                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold">
+                <Button
+                  variant="ghost"
+                  className="gap-2 px-2 h-10 group transition-all duration-200 hover:bg-primary/5 active:scale-95"
+                >
+                  <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold transition-colors group-hover:bg-primary/20 group-hover:text-primary">
                     {user.name.charAt(0).toUpperCase()}
                   </div>
-                  <span className="hidden sm:inline-block">{user.name}</span>
+                  <span className="hidden sm:inline-block text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                    {user.name}
+                  </span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56 p-2">
@@ -183,7 +188,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
-                  className="h-10 text-destructive focus:text-destructive cursor-pointer flex items-center gap-2"
+                  className="h-10 text-destructive hover:!text-white hover:!bg-destructive focus:text-destructive cursor-pointer flex items-center gap-2"
                   onClick={logout}
                 >
                   <LogOut className="h-4 w-4" />

@@ -29,20 +29,15 @@ export const metadata: Metadata = {
   description:
     "ClearIt provides free, privacy-first online tools to fix files, clean data, and convert formats instantly. Word counter, image compressor, PDF merger, CSV converter, and more. All processing happens in your browser - no uploads, no accounts required.",
   keywords: [
-    "clearit",
-    "online tools",
-    "free tools",
-    "text tools",
-    "image tools",
-    "PDF tools",
-    "data tools",
-    "web tools",
-    "word counter",
-    "image compressor",
-    "PDF merger",
-    "CSV converter",
-    "privacy-first tools",
-    "browser-based tools",
+    "clearit online tools",
+    "free word counter",
+    "image compressor without upload",
+    "secure PDF merger",
+    "JSON formatter browser",
+    "privacy-first file tools",
+    "no-registration online converter",
+    "browser-based utilities",
+    "safe data cleaning",
   ],
   openGraph: {
     title: "ClearIt - Free Online Tools for Text, Images, PDFs & Data",
@@ -168,6 +163,37 @@ export default function ToolsLanding() {
     ],
   };
 
+  const faqStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Is ClearIt really free to use?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes, ClearIt is 100% free to use. There are no hidden costs, subscriptions, or premium tiers for our basic toolset.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Are my files safe on ClearIt?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Absolutely. ClearIt uses browser-based processing, meaning your files never leave your computer. We don't upload your data to any servers.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do I need to create an account?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No account is required. You can start using any of our tools immediately without signing up or providing any personal information.",
+        },
+      },
+    ],
+  };
+
   return (
     <>
       <script
@@ -179,6 +205,10 @@ export default function ToolsLanding() {
         dangerouslySetInnerHTML={{
           __html: JSON.stringify(breadcrumbStructuredData),
         }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
       />
       <div className="max-w-7xl mx-auto space-y-12 animate-fade-in">
         <WelcomeTrigger />
@@ -305,6 +335,60 @@ export default function ToolsLanding() {
                 </Link>
               );
             })}
+          </div>
+        </section>
+
+        {/* FAQ Section */}
+        <section className="space-y-8 pt-12 border-t border-border">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold text-foreground">
+              Frequently Asked Questions
+            </h2>
+            <p className="text-muted-foreground mt-2">
+              Common questions about ClearIt and our tools
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold text-foreground">
+                Is ClearIt really free?
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                Yes, all our tools are completely free to use. We believe in
+                providing essential digital utilities without the friction of
+                paywalls or subscriptions.
+              </p>
+            </div>
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold text-foreground">
+                How do you handle my data?
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                We don't! All processing happens locally in your browser using
+                JavaScript. Your files and data are never uploaded to our
+                servers, ensuring 100% privacy.
+              </p>
+            </div>
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold text-foreground">
+                Do I need an account?
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                No. You can use any tool on ClearIt immediately without
+                registering. We don't collect emails or personal information.
+              </p>
+            </div>
+            <div className="space-y-3">
+              <h3 className="text-lg font-semibold text-foreground">
+                Which browsers are supported?
+              </h3>
+              <p className="text-muted-foreground leading-relaxed">
+                ClearIt works best on modern browsers like Chrome, Firefox,
+                Safari, and Edge. Since we process data locally, we recommend
+                keeping your browser updated.
+              </p>
+            </div>
           </div>
         </section>
 

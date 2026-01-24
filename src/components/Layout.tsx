@@ -6,6 +6,7 @@ import Sidebar from "./Sidebar";
 import { FeatureFlagBanner } from "./FeatureFlagBanner";
 import { SearchOverlay } from "./SearchOverlay";
 import { cn } from "@/lib/utils";
+import { useGlobalUIStore } from "@/store/use-global-ui-store";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -14,6 +15,7 @@ interface LayoutProps {
 export default function Layout({ children }: LayoutProps) {
   const [sidebarOpen, setSidebarOpen] = React.useState(false);
   const [isMounted, setIsMounted] = React.useState(false);
+  const { bannerVisible } = useGlobalUIStore();
 
   React.useEffect(() => {
     setIsMounted(true);
@@ -33,7 +35,7 @@ export default function Layout({ children }: LayoutProps) {
       {/* Top Navbar - Full Width, Always Visible */}
       <Navbar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
 
-      {/* Sticky Banner - Integrated below Navbar */}
+      {/* Fixed Sticky Banner - Always at the top, respects sidebar */}
       <FeatureFlagBanner sidebarOpen={sidebarOpen} />
 
       <div className="flex pt-16 min-h-[calc(100vh-4rem)]">
@@ -51,11 +53,18 @@ export default function Layout({ children }: LayoutProps) {
         {/* Main Content */}
         <main
           className={cn(
-            "flex-1 transition-all duration-300 min-w-0 w-full",
+            "flex-1 transition-all duration-300 min-w-0 w-full relative",
             sidebarOpen ? "lg:ml-64" : "lg:ml-16 ml-0",
           )}
         >
-          <div className="p-4 md:p-8 max-w-[1440px] mx-auto">{children}</div>
+          <div
+            className={cn(
+              "px-4 md:px-8 max-w-[1440px] mx-auto transition-all duration-500",
+              bannerVisible ? "pt-12 md:pt-14" : "pt-4 md:pt-8",
+            )}
+          >
+            <div className="pb-8">{children}</div>
+          </div>
         </main>
       </div>
     </div>

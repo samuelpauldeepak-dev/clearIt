@@ -9,25 +9,23 @@ export const metadata: Metadata = {
     process.env.NEXT_PUBLIC_APP_URL || "https://clearit.spdic.com",
   ),
   title: {
-    default: "ClearIt - Clear digital problems instantly",
+    default: "ClearIt - Simple, Privacy-First Online Tools",
     template: "%s | ClearIt",
   },
   description:
-    "Fix files, clean data, convert formats — without friction. Free online tools for text, images, PDFs, data, and web development.",
+    "Free online tools for text, images, PDFs, data, and web development. All tools work instantly in your browser with zero uploads. Privacy-first, open-source utilities.",
   keywords: [
     "online tools",
-    "file converter",
-    "text tools",
-    "image compressor",
-    "PDF tools",
-    "data converter",
-    "web tools",
-    "free tools",
-    "browser tools",
-    "privacy-first tools",
+    "free file converter",
+    "privacy-first utilities",
+    "text analysis tools",
+    "image optimization",
+    "PDF editor online",
+    "browser-based data tools",
+    "web developer utilities",
   ],
-  authors: [{ name: "ClearIt" }],
-  creator: "ClearIt",
+  authors: [{ name: "Samuel Paul Deepak", url: "https://spdic.com" }],
+  creator: "Samuel Paul Deepak",
   publisher: "ClearIt",
   formatDetection: {
     email: false,
@@ -42,25 +40,26 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: process.env.NEXT_PUBLIC_APP_URL || "https://clearit.spdic.com",
+    url: "/",
     siteName: "ClearIt",
     title: "ClearIt - Clear digital problems instantly",
     description:
-      "Fix files, clean data, convert formats — without friction. Free online tools for text, images, PDFs, data, and web development.",
+      "All-in-one browser toolkit: Convert, optimize, and clean your files without leaving your browser. 100% private, no accounts required.",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ClearIt - Digital Tools",
+        alt: "ClearIt - The Ultimate Browser Toolkit",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ClearIt - Clear digital problems instantly",
+    title: "ClearIt - Professional Digital Tools",
     description: "Fix files, clean data, convert formats — without friction.",
     images: ["/og-image.png"],
+    creator: "@samuelpauldeepak",
   },
   robots: {
     index: true,
@@ -73,10 +72,8 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  verification: {
-    // Add your verification codes here when available
-    // google: 'your-google-verification-code',
-    // yandex: 'your-yandex-verification-code',
+  alternates: {
+    canonical: "/",
   },
 };
 

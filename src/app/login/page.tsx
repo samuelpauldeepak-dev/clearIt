@@ -121,7 +121,7 @@ export default function LoginPage() {
             variant="outline"
             type="button"
             disabled={isLoading}
-            className="h-12 border-2 hover:bg-[#f8f9fa] hover:border-[#dadce0] transition-colors"
+            className="h-12 border-2 hover:bg-[#f8f9fa] hover:border-[#dadce0] hover:text-foreground transition-colors"
             onClick={() => handleSocialLogin("Google")}
           >
             <svg className="h-5 w-5 mr-0 sm:mr-2" viewBox="0 0 24 24">
@@ -164,7 +164,7 @@ export default function LoginPage() {
             variant="outline"
             type="button"
             disabled={isLoading}
-            className="h-12 border-2 hover:bg-[#00a4ef]/5 hover:border-[#00a4ef]/20 transition-colors"
+            className="h-12 border-2 hover:bg-[#00a4ef]/5 hover:border-[#00a4ef]/20 hover:text-foreground transition-colors"
             onClick={() => handleSocialLogin("Microsoft")}
           >
             <svg className="h-5 w-5 mr-0 sm:mr-2" viewBox="0 0 23 23">
