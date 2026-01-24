@@ -79,22 +79,22 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
           </Link>
 
           {/* Navigation Links */}
-          {/* <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link key={link.path} href={link.path}>
                 <Button
                   variant="ghost"
                   className={`${
                     pathname === link.path
-                      ? 'bg-muted text-foreground hover:text-white'
-                      : 'text-muted-foreground hover:text-foreground'
+                      ? "bg-muted text-foreground hover:text-white"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {link.name}
                 </Button>
               </Link>
             ))}
-          </div> */}
+          </div>
         </div>
 
         {/* Right Section */}
@@ -175,15 +175,6 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
                   >
                     <SettingsIcon className="h-4 w-4" />
                     <span>Settings</span>
-                  </Link>
-                </DropdownMenuItem>
-                <DropdownMenuItem asChild className="h-10 cursor-pointer">
-                  <Link
-                    href="/pricing"
-                    className="flex items-center gap-2 w-full"
-                  >
-                    <CreditCard className="h-4 w-4" />
-                    <span>Pricing</span>
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />

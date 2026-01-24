@@ -73,7 +73,12 @@ const solutions = [
     solution:
       "Utilso provides instant tools to resize images for different social platforms, compress videos without quality loss, format text for web publishing, and convert between document formats — all without leaving your browser.",
     tools: [
-      { category: "image", name: "Image Compressor", icon: Image },
+      {
+        category: "image",
+        name: "Image Compressor",
+        icon: Image,
+        params: "quality=60&outputFormat=JPEG",
+      },
       { category: "image", name: "Image Resizer", icon: Image },
       { category: "text", name: "Text Formatter", icon: FileText },
       { category: "web", name: "HTML Minifier", icon: Globe },
@@ -97,7 +102,12 @@ const solutions = [
     solution:
       "Utilso enables instant PDF merging for reports, data conversion between Excel and JSON for integrations, and document format conversion — eliminating the need for expensive software licenses.",
     tools: [
-      { category: "pdf", name: "PDF Merger", icon: FileType },
+      {
+        category: "pdf",
+        name: "PDF Merger",
+        icon: FileType,
+        params: "addBookmarks=true&addPageNumbers=true",
+      },
       { category: "pdf", name: "PDF Splitter", icon: FileType },
       { category: "data", name: "CSV Converter", icon: Database },
       { category: "data", name: "Data Cleaner", icon: Database },
@@ -121,7 +131,12 @@ const solutions = [
     solution:
       "Utilso helps format papers correctly, count words for assignments, convert between document formats for different learning management systems, and prepare materials for online or print distribution.",
     tools: [
-      { category: "text", name: "Word Counter", icon: FileText },
+      {
+        category: "text",
+        name: "Word Counter",
+        icon: FileText,
+        params: "includeSpaces=false&countPunctuation=false",
+      },
       { category: "text", name: "Text Formatter", icon: FileText },
       { category: "pdf", name: "PDF Converter", icon: FileType },
       { category: "data", name: "CSV Converter", icon: Database },
@@ -145,7 +160,12 @@ const solutions = [
     solution:
       "Utilso offers instant code minification for production, JSON/XML validation and formatting, data conversion for APIs, and web asset optimization — all browser-based with no installation.",
     tools: [
-      { category: "web", name: "HTML Minifier", icon: Globe },
+      {
+        category: "web",
+        name: "HTML Minifier",
+        icon: Globe,
+        params: "removeComments=true&collapseWhitespace=true&minifyCSS=true",
+      },
       { category: "web", name: "Code Formatter", icon: Globe },
       { category: "data", name: "JSON Formatter", icon: Database },
       { category: "data", name: "CSV Converter", icon: Database },
@@ -307,15 +327,19 @@ export default function SolutionsPage() {
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-3">
-                        {solution.tools.map((tool) => {
+                        {solution.tools.map((tool: any) => {
                           const ToolIcon = tool.icon;
+                          const toolUrl = `/tool/${tool.category}/${tool.name.toLowerCase().replace(" ", "-")}`;
+
                           return (
-                            <Link
+                            <div
                               key={tool.name}
-                              href={`/category/${tool.category}`}
-                              className="block"
+                              className="flex items-center justify-between gap-3 p-3 rounded-lg hover:bg-muted transition-smooth group border border-transparent hover:border-border"
                             >
-                              <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-smooth group">
+                              <Link
+                                href={toolUrl}
+                                className="flex items-center gap-3 flex-1"
+                              >
                                 <div
                                   className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
                                   style={{
@@ -329,12 +353,28 @@ export default function SolutionsPage() {
                                     }}
                                   />
                                 </div>
-                                <span className="flex-1 font-medium text-foreground">
+                                <span className="font-medium text-foreground">
                                   {tool.name}
                                 </span>
-                                <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-1 transition-smooth" />
-                              </div>
-                            </Link>
+                              </Link>
+
+                              {tool.params ? (
+                                <Link href={`${toolUrl}?${tool.params}`}>
+                                  <Button
+                                    size="sm"
+                                    variant="secondary"
+                                    className="h-8 text-xs font-medium bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-all"
+                                  >
+                                    <Zap className="h-3 w-3 mr-1.5" />
+                                    Quick Start
+                                  </Button>
+                                </Link>
+                              ) : (
+                                <Link href={toolUrl}>
+                                  <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-1 transition-smooth" />
+                                </Link>
+                              )}
+                            </div>
                           );
                         })}
                       </CardContent>

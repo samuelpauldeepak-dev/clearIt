@@ -17,8 +17,26 @@ import { toast } from "sonner";
 
 export default function PricingPage() {
   const { subscription, updateSubscription } = useUserStore();
+  const [currency, setCurrency] = React.useState<"INR" | "USD">("USD");
+
+  React.useEffect(() => {
+    // Simple timezone check for India
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (timeZone === "Asia/Kolkata") {
+      setCurrency("INR");
+    }
+  }, []);
 
   const handleSubscribe = (tier: any, price: string, limit: number) => {
+    // STRIPE INTEGRATION PLACEHOLDER
+    // TODO: Initialize Stripe checkout session here
+    // const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_KEY);
+    // await stripe.redirectToCheckout({ ... });
+
+    console.log(
+      `Initiating checkout for ${tier} plan (${price}) in ${currency}`,
+    );
+
     updateSubscription({
       tier,
       usageLimit: limit,
@@ -27,67 +45,63 @@ export default function PricingPage() {
     toast.success(`Successfully subscribed to ${tier} plan!`);
   };
 
+  const pricingData = {
+    INR: {
+      free: "₹0",
+      personal: "₹199",
+      pro: "₹699",
+    },
+    USD: {
+      free: "$0",
+      personal: "$5",
+      pro: "$10",
+    },
+  };
+
   const plans = [
     {
       name: "Free",
-      price: "$0",
-      description: "Perfect for occasional tasks",
-      limit: 1,
+      price: pricingData[currency].free,
+      description: "Trust and trial",
+      limit: 10,
       features: [
-        "1 use per month",
-        "Basic text tools",
-        "Standard support",
-        "Privacy-first processing",
+        "10 uses per month",
+        "All tools accessible",
+        "No ads",
+        "No file storage",
       ],
       tier: "free",
       icon: <Zap className="h-6 w-6 text-muted-foreground" />,
     },
     {
-      name: "Basic",
-      price: "$5",
-      description: "Ideal for small projects",
-      limit: 30,
+      name: "Personal",
+      price: pricingData[currency].personal,
+      description: "For regular everyday use",
+      limit: 500,
       features: [
-        "30 uses per month",
-        "All core tools",
-        "Email support",
+        "500 uses per month",
+        "Faster processing",
+        "Batch actions",
         "No ads",
-        "Advanced text features",
+        "Priority access to new tools",
       ],
-      tier: "basic",
-      icon: <Check className="h-6 w-6 text-blue-500" />,
-      popular: false,
-    },
-    {
-      name: "Pro",
-      price: "$10",
-      description: "For power users and pros",
-      limit: 100,
-      features: [
-        "100 uses per month",
-        "Priority processing",
-        "Beta tool access",
-        "Priority support",
-        "Web dev suite",
-      ],
-      tier: "pro",
-      icon: <Sparkles className="h-6 w-6 text-primary" />,
+      tier: "personal",
+      icon: <Check className="h-6 w-6 text-primary" />,
       popular: true,
     },
     {
-      name: "Unlimited",
-      price: "$25",
-      description: "The ultimate freedom",
-      limit: 999999,
+      name: "Pro",
+      price: pricingData[currency].pro,
+      description: "For power users",
+      limit: 2000,
       features: [
-        "Unlimited monthly uses",
-        "Customizable settings",
-        "Enterprise support",
-        "Early access features",
-        "Personalized tools",
+        "2,000+ uses per month",
+        "Priority processing",
+        "Advanced tools",
+        "Early feature access",
       ],
-      tier: "unlimited",
-      icon: <Infinity className="h-6 w-6 text-purple-600" />,
+      tier: "pro",
+      icon: <Sparkles className="h-6 w-6 text-purple-600" />,
       popular: false,
     },
   ];
@@ -104,7 +118,7 @@ export default function PricingPage() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {plans.map((plan) => (
           <Card
             key={plan.name}
@@ -165,13 +179,20 @@ export default function PricingPage() {
         ))}
       </div>
 
-      <div className="mt-20 text-center bg-muted/30 p-12 rounded-3xl border border-border">
+      <div className="mt-12 text-center">
+        <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
+          <ShieldCheck className="h-4 w-4" />
+          Secure payments powered by Stripe (Integration Ready)
+        </p>
+      </div>
+
+      <div className="mt-8 text-center bg-muted/30 p-12 rounded-3xl border border-border">
         <h2 className="text-2xl font-bold mb-4">
-          Need a custom plan for your team?
+          Need an Enterprise Solution?
         </h2>
         <p className="text-muted-foreground mb-8">
-          We offer enterprise solutions with volume discounts and custom
-          deployments.
+          We offer custom solutions for large teams with volume discounts and
+          dedicated support.
         </p>
         <Button variant="outline" size="lg" className="h-12 px-8 font-semibold">
           Contact Sales

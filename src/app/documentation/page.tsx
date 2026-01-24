@@ -11,6 +11,7 @@ import {
   Info,
   Lightbulb,
   ArrowRight,
+  Zap,
 } from "lucide-react";
 import {
   Card,
@@ -43,6 +44,7 @@ interface Documentation {
   tips: string[];
   limitations: string[];
   faqs: Array<{ question: string; answer: string }>;
+  quickStartParams?: string;
 }
 
 const documentation: Documentation[] = [
@@ -98,6 +100,7 @@ const documentation: Documentation[] = [
           "The estimate is based on an average reading speed of 200 words per minute. Actual reading time varies based on content complexity and reader proficiency.",
       },
     ],
+    quickStartParams: "includeSpaces=false&countPunctuation=false",
   },
   {
     id: "image-compressor",
@@ -158,6 +161,7 @@ const documentation: Documentation[] = [
           "The compression is lossy for JPEG and WebP formats, meaning some quality is traded for smaller file size. PNG compression can be lossless at 100% quality.",
       },
     ],
+    quickStartParams: "quality=80&outputFormat=WebP",
   },
   {
     id: "pdf-merger",
@@ -221,6 +225,7 @@ const documentation: Documentation[] = [
           "Currently, the merger combines entire PDFs. Use the PDF Splitter first to extract specific pages, then merge those extracted files.",
       },
     ],
+    quickStartParams: "addBookmarks=true",
   },
   {
     id: "csv-converter",
@@ -285,6 +290,7 @@ const documentation: Documentation[] = [
           "Yes, the converter works bidirectionally. Upload a JSON file and select CSV as the output format.",
       },
     ],
+    quickStartParams: "outputFormat=JSON&firstRowHeader=true",
   },
   {
     id: "html-minifier",
@@ -345,6 +351,8 @@ const documentation: Documentation[] = [
           "No, minification cannot be fully reversed. Use code formatters to make minified code more readable, but original formatting and comments are lost.",
       },
     ],
+    quickStartParams:
+      "removeComments=true&collapseWhitespace=true&minifyCSS=true",
   },
 ];
 
@@ -520,12 +528,26 @@ export default function DocumentationPage() {
                         {doc.overview}
                       </CardDescription>
                     </div>
-                    <Link href={`/tool/${doc.category}/${doc.id}`}>
-                      <Button variant="outline" className="gap-2">
-                        Launch Tool
-                        <ArrowRight className="h-4 w-4" />
-                      </Button>
-                    </Link>
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      {doc.quickStartParams && (
+                        <Link
+                          href={`/tool/${doc.category}/${doc.id}?${doc.quickStartParams}`}
+                        >
+                          <Button className="gap-2 bg-primary text-primary-foreground hover:bg-primary/90">
+                            <Zap className="h-4 w-4" />
+                            Launch with Recommended Settings
+                          </Button>
+                        </Link>
+                      )}
+                      <Link href={`/tool/${doc.category}/${doc.id}`}>
+                        <Button variant="outline" className="gap-2">
+                          {doc.quickStartParams
+                            ? "Launch Default"
+                            : "Launch Tool"}
+                          <ArrowRight className="h-4 w-4" />
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
                 </CardHeader>
 
