@@ -53,15 +53,15 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-card border-b border-border">
-      <div className="flex items-center justify-between h-full px-2">
+      <div className="flex items-center justify-between h-full px-2 md:px-4">
         {/* Left Section */}
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-2 md:gap-6">
           {/* Sidebar Toggle */}
           <Button
             variant="ghost"
             size="icon"
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="hover:bg-muted w-11"
+            className="hover:bg-muted w-10 md:w-11 shrink-0"
             aria-label={sidebarOpen ? "Close sidebar" : "Open sidebar"}
             aria-expanded={sidebarOpen}
           >
@@ -69,7 +69,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
           </Button>
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-0">
+          <Link href="/" className="flex items-center gap-0 shrink-0">
             {/* <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
               <span className="text-primary-foreground font-bold text-lg">C</span>
             </div> */}
@@ -98,7 +98,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1 sm:gap-4">
           {/* Global Search - Desktop */}
           <div className="relative hidden lg:block">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
@@ -141,7 +141,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="gap-2 px-2 h-10 group transition-all duration-200 hover:bg-primary/5 active:scale-95"
+                  className="gap-2 px-1 md:px-2 h-10 group transition-all duration-200 hover:bg-primary/5 active:scale-95"
                 >
                   <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold transition-colors group-hover:bg-primary/20 group-hover:text-primary">
                     {user.name.charAt(0).toUpperCase()}
@@ -197,19 +197,26 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <>
+            <div className="flex items-center gap-1 sm:gap-2">
               <Link href="/login" onClick={() => setSidebarOpen(false)}>
-                <Button variant="ghost" className="gap-2">
-                  <LogIn className="h-4 w-4" />
-                  Login
+                <Button
+                  variant="secondary"
+                  size="sm"
+                  className="gap-2 px-3 h-7 sm:h-9 text-xs sm:text-sm"
+                >
+                  <LogIn className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                  <span className="hidden sm:inline">Login</span>
                 </Button>
               </Link>
               <Link href="/signup" onClick={() => setSidebarOpen(false)}>
-                <Button className="bg-primary hover:bg-primary-hover">
+                <Button
+                  size="sm"
+                  className="bg-primary hover:bg-primary-hover px-3 sm:px-4 h-7 sm:h-9 text-xs sm:text-sm"
+                >
                   Sign Up
                 </Button>
               </Link>
-            </>
+            </div>
           )}
         </div>
       </div>
