@@ -239,8 +239,7 @@ export async function generateMetadata({
     };
   }
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_APP_URL || "https://clearit.spdic.com";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://utilso.spdic.com";
   const categoryUrl = `${baseUrl}/category/${categoryId}`;
 
   return {
@@ -254,19 +253,19 @@ export async function generateMetadata({
       ...category.tools.flatMap((t) =>
         t.features.slice(0, 2).map((f) => f.toLowerCase()),
       ),
-      "clearit",
+      "utilso",
     ],
     authors: [{ name: "Samuel Paul Deepak" }],
     openGraph: {
-      title: `${category.name} | ClearIt Browser Utilities`,
+      title: `${category.name} | Utilso Browser Utilities`,
       description: `Access high-performance ${category.name.toLowerCase()} directly in your browser. All tools are free, private, and require no account.`,
       url: `/category/${categoryId}`,
       type: "website",
-      siteName: "ClearIt",
+      siteName: "Utilso",
     },
     twitter: {
       card: "summary_large_image",
-      title: `${category.name} - ClearIt Utilities`,
+      title: `${category.name} - Utilso Utilities`,
       description: category.description,
     },
     alternates: {
@@ -290,13 +289,12 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   }
 
   const Icon = category.icon;
-  const baseUrl =
-    process.env.NEXT_PUBLIC_APP_URL || "https://clearit.spdic.com";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://utilso.spdic.com";
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: `${category.name} - ClearIt`,
+    name: `${category.name} - Utilso`,
     description: category.description,
     url: `${baseUrl}/category/${categoryId}`,
     mainEntity: {

@@ -1,7 +1,7 @@
-import React from 'react';
-import type { Metadata } from 'next';
-import Link from 'next/link';
-import { 
+import React from "react";
+import type { Metadata } from "next";
+import Link from "next/link";
+import {
   FileText,
   Image,
   FileType,
@@ -13,38 +13,47 @@ import {
   GraduationCap,
   Code,
   CheckCircle2,
-  Zap
-} from 'lucide-react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Separator } from '@/components/ui/separator';
+  Zap,
+} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
 
 export const metadata: Metadata = {
-  title: "Solutions for ClearIt - Workflow Solutions for Every Professional",
-  description: "Discover how ClearIt solves real problems for content creators, business professionals, students, educators, and developers. Learn about workflow solutions, tool recommendations, and step-by-step guides for using ClearIt tools effectively.",
+  title: "Solutions for Utilso - Workflow Solutions for Every Professional",
+  description:
+    "Discover how Utilso solves real problems for content creators, business professionals, students, educators, and developers. Learn about workflow solutions, tool recommendations, and step-by-step guides for using Utilso tools effectively.",
   keywords: [
-    "clearit solutions",
-    "solutions for clearit",
-    "clearit workflow",
+    "utilso solutions",
+    "solutions for utilso",
+    "utilso workflow",
     "content creator tools",
     "business document tools",
     "student tools",
     "developer tools",
-    "clearit use cases",
-    "clearit tutorials",
+    "utilso use cases",
+    "utilso tutorials",
     "workflow optimization",
-    "digital tools solutions"
+    "digital tools solutions",
   ],
   openGraph: {
-    title: "Solutions for ClearIt - Workflow Solutions for Every Professional",
-    description: "Discover how ClearIt solves real problems for professionals, creators, students, and developers.",
+    title: "Solutions for Utilso - Workflow Solutions for Every Professional",
+    description:
+      "Discover how Utilso solves real problems for professionals, creators, students, and developers.",
     url: "/solutions",
     type: "website",
   },
   twitter: {
-    title: "Solutions for ClearIt",
-    description: "Discover how ClearIt solves real problems for professionals, creators, students, and developers.",
+    title: "Solutions for Utilso",
+    description:
+      "Discover how Utilso solves real problems for professionals, creators, students, and developers.",
   },
   alternates: {
     canonical: "/solutions",
@@ -53,128 +62,140 @@ export const metadata: Metadata = {
 
 const solutions = [
   {
-    id: 'content-creators',
+    id: "content-creators",
     icon: Users,
-    title: 'For Content Creators',
-    subtitle: 'Streamline your content workflow',
-    problem: 'Content creators often struggle with file format incompatibilities, image optimization for different platforms, and text formatting issues that slow down their publishing workflow.',
-    whoFor: 'Bloggers, YouTubers, social media managers, and digital marketers who need to prepare content for multiple platforms quickly.',
-    solution: 'ClearIt provides instant tools to resize images for different social platforms, compress videos without quality loss, format text for web publishing, and convert between document formats — all without leaving your browser.',
+    title: "For Content Creators",
+    subtitle: "Streamline your content workflow",
+    problem:
+      "Content creators often struggle with file format incompatibilities, image optimization for different platforms, and text formatting issues that slow down their publishing workflow.",
+    whoFor:
+      "Bloggers, YouTubers, social media managers, and digital marketers who need to prepare content for multiple platforms quickly.",
+    solution:
+      "Utilso provides instant tools to resize images for different social platforms, compress videos without quality loss, format text for web publishing, and convert between document formats — all without leaving your browser.",
     tools: [
-      { category: 'image', name: 'Image Compressor', icon: Image },
-      { category: 'image', name: 'Image Resizer', icon: Image },
-      { category: 'text', name: 'Text Formatter', icon: FileText },
-      { category: 'web', name: 'HTML Minifier', icon: Globe }
+      { category: "image", name: "Image Compressor", icon: Image },
+      { category: "image", name: "Image Resizer", icon: Image },
+      { category: "text", name: "Text Formatter", icon: FileText },
+      { category: "web", name: "HTML Minifier", icon: Globe },
     ],
     workflow: [
-      'Upload your content files (images, text, or code)',
-      'Apply format-specific optimizations with one click',
-      'Download processed files ready for publishing',
-      'Repeat for different platforms with saved presets'
-    ]
+      "Upload your content files (images, text, or code)",
+      "Apply format-specific optimizations with one click",
+      "Download processed files ready for publishing",
+      "Repeat for different platforms with saved presets",
+    ],
   },
   {
-    id: 'business-professionals',
+    id: "business-professionals",
     icon: Briefcase,
-    title: 'For Business Professionals',
-    subtitle: 'Handle documents efficiently',
-    problem: 'Business professionals waste valuable time dealing with PDF management, data conversion between systems, and preparing documents for presentations or reports.',
-    whoFor: 'Executives, analysts, consultants, and office workers who regularly handle business documents and need quick document processing.',
-    solution: 'ClearIt enables instant PDF merging for reports, data conversion between Excel and JSON for integrations, and document format conversion — eliminating the need for expensive software licenses.',
+    title: "For Business Professionals",
+    subtitle: "Handle documents efficiently",
+    problem:
+      "Business professionals waste valuable time dealing with PDF management, data conversion between systems, and preparing documents for presentations or reports.",
+    whoFor:
+      "Executives, analysts, consultants, and office workers who regularly handle business documents and need quick document processing.",
+    solution:
+      "Utilso enables instant PDF merging for reports, data conversion between Excel and JSON for integrations, and document format conversion — eliminating the need for expensive software licenses.",
     tools: [
-      { category: 'pdf', name: 'PDF Merger', icon: FileType },
-      { category: 'pdf', name: 'PDF Splitter', icon: FileType },
-      { category: 'data', name: 'CSV Converter', icon: Database },
-      { category: 'data', name: 'Data Cleaner', icon: Database }
+      { category: "pdf", name: "PDF Merger", icon: FileType },
+      { category: "pdf", name: "PDF Splitter", icon: FileType },
+      { category: "data", name: "CSV Converter", icon: Database },
+      { category: "data", name: "Data Cleaner", icon: Database },
     ],
     workflow: [
-      'Gather documents from different sources',
-      'Merge, split, or convert as needed',
-      'Apply data cleaning and validation',
-      'Export in the required format for your workflow'
-    ]
+      "Gather documents from different sources",
+      "Merge, split, or convert as needed",
+      "Apply data cleaning and validation",
+      "Export in the required format for your workflow",
+    ],
   },
   {
-    id: 'students-educators',
+    id: "students-educators",
     icon: GraduationCap,
-    title: 'For Students & Educators',
-    subtitle: 'Simplify academic work',
-    problem: 'Students and educators face challenges with assignment formatting, citation management, document conversion for different submission systems, and collaborative document preparation.',
-    whoFor: 'Students, teachers, researchers, and academic administrators working with various document formats and submission requirements.',
-    solution: 'ClearIt helps format papers correctly, count words for assignments, convert between document formats for different learning management systems, and prepare materials for online or print distribution.',
+    title: "For Students & Educators",
+    subtitle: "Simplify academic work",
+    problem:
+      "Students and educators face challenges with assignment formatting, citation management, document conversion for different submission systems, and collaborative document preparation.",
+    whoFor:
+      "Students, teachers, researchers, and academic administrators working with various document formats and submission requirements.",
+    solution:
+      "Utilso helps format papers correctly, count words for assignments, convert between document formats for different learning management systems, and prepare materials for online or print distribution.",
     tools: [
-      { category: 'text', name: 'Word Counter', icon: FileText },
-      { category: 'text', name: 'Text Formatter', icon: FileText },
-      { category: 'pdf', name: 'PDF Converter', icon: FileType },
-      { category: 'data', name: 'CSV Converter', icon: Database }
+      { category: "text", name: "Word Counter", icon: FileText },
+      { category: "text", name: "Text Formatter", icon: FileText },
+      { category: "pdf", name: "PDF Converter", icon: FileType },
+      { category: "data", name: "CSV Converter", icon: Database },
     ],
     workflow: [
-      'Draft and format your academic content',
-      'Verify word count and formatting requirements',
-      'Convert to required submission format',
-      'Prepare supplementary materials (data, images)'
-    ]
+      "Draft and format your academic content",
+      "Verify word count and formatting requirements",
+      "Convert to required submission format",
+      "Prepare supplementary materials (data, images)",
+    ],
   },
   {
-    id: 'developers',
+    id: "developers",
     icon: Code,
-    title: 'For Developers',
-    subtitle: 'Optimize code and data',
-    problem: 'Developers need quick access to code formatting, data validation, API response formatting, and file conversion tools without installing heavy software or running terminal commands.',
-    whoFor: 'Web developers, software engineers, DevOps professionals, and technical teams working with code and structured data.',
-    solution: 'ClearIt offers instant code minification for production, JSON/XML validation and formatting, data conversion for APIs, and web asset optimization — all browser-based with no installation.',
+    title: "For Developers",
+    subtitle: "Optimize code and data",
+    problem:
+      "Developers need quick access to code formatting, data validation, API response formatting, and file conversion tools without installing heavy software or running terminal commands.",
+    whoFor:
+      "Web developers, software engineers, DevOps professionals, and technical teams working with code and structured data.",
+    solution:
+      "Utilso offers instant code minification for production, JSON/XML validation and formatting, data conversion for APIs, and web asset optimization — all browser-based with no installation.",
     tools: [
-      { category: 'web', name: 'HTML Minifier', icon: Globe },
-      { category: 'web', name: 'Code Formatter', icon: Globe },
-      { category: 'data', name: 'JSON Formatter', icon: Database },
-      { category: 'data', name: 'CSV Converter', icon: Database }
+      { category: "web", name: "HTML Minifier", icon: Globe },
+      { category: "web", name: "Code Formatter", icon: Globe },
+      { category: "data", name: "JSON Formatter", icon: Database },
+      { category: "data", name: "CSV Converter", icon: Database },
     ],
     workflow: [
-      'Paste or upload your code/data files',
-      'Apply validation, formatting, or minification',
-      'Review changes with syntax highlighting',
-      'Download optimized files for deployment'
-    ]
-  }
+      "Paste or upload your code/data files",
+      "Apply validation, formatting, or minification",
+      "Review changes with syntax highlighting",
+      "Download optimized files for deployment",
+    ],
+  },
 ];
 
 export default function SolutionsPage() {
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://clearit.spdic.com';
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://utilso.spdic.com";
 
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "name": "Solutions for ClearIt",
-    "description": "Workflow solutions and use cases for ClearIt tools",
-    "url": `${baseUrl}/solutions`,
-    "mainEntity": {
+    name: "Solutions for Utilso",
+    description: "Workflow solutions and use cases for Utilso tools",
+    url: `${baseUrl}/solutions`,
+    mainEntity: {
       "@type": "ItemList",
-      "itemListElement": solutions.map((solution, index) => ({
+      itemListElement: solutions.map((solution, index) => ({
         "@type": "ListItem",
-        "position": index + 1,
-        "name": solution.title,
-        "description": solution.solution
-      }))
-    }
+        position: index + 1,
+        name: solution.title,
+        description: solution.solution,
+      })),
+    },
   };
 
   const breadcrumbStructuredData = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": [
+    itemListElement: [
       {
         "@type": "ListItem",
-        "position": 1,
-        "name": "Home",
-        "item": baseUrl
+        position: 1,
+        name: "Home",
+        item: baseUrl,
       },
       {
         "@type": "ListItem",
-        "position": 2,
-        "name": "Solutions",
-        "item": `${baseUrl}/solutions`
-      }
-    ]
+        position: 2,
+        name: "Solutions",
+        item: `${baseUrl}/solutions`,
+      },
+    ],
   };
 
   return (
@@ -185,7 +206,9 @@ export default function SolutionsPage() {
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(breadcrumbStructuredData),
+        }}
       />
       <div className="max-w-7xl mx-auto space-y-12 animate-fade-in">
         {/* Page Header */}
@@ -198,8 +221,9 @@ export default function SolutionsPage() {
             Solutions for Every Workflow
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Discover how ClearIt solves real problems for professionals, creators, students, and developers. 
-            No matter your role, we have tools to streamline your digital workflow.
+            Discover how Utilso solves real problems for professionals,
+            creators, students, and developers. No matter your role, we have
+            tools to streamline your digital workflow.
           </p>
         </div>
 
@@ -207,19 +231,23 @@ export default function SolutionsPage() {
         <div className="space-y-16">
           {solutions.map((solution, index) => {
             const Icon = solution.icon;
-            
+
             return (
               <div key={solution.id} className="space-y-6">
                 {index > 0 && <Separator className="my-12" />}
-                
+
                 {/* Solution Header */}
                 <div className="flex items-start gap-4">
                   <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center shrink-0">
                     <Icon className="h-7 w-7 text-primary" />
                   </div>
                   <div>
-                    <h2 className="text-3xl font-bold text-foreground">{solution.title}</h2>
-                    <p className="text-lg text-muted-foreground mt-1">{solution.subtitle}</p>
+                    <h2 className="text-3xl font-bold text-foreground">
+                      {solution.title}
+                    </h2>
+                    <p className="text-lg text-muted-foreground mt-1">
+                      {solution.subtitle}
+                    </p>
                   </div>
                 </div>
 
@@ -233,7 +261,9 @@ export default function SolutionsPage() {
                         <CardTitle className="text-lg">The Problem</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-muted-foreground leading-relaxed">{solution.problem}</p>
+                        <p className="text-muted-foreground leading-relaxed">
+                          {solution.problem}
+                        </p>
                       </CardContent>
                     </Card>
 
@@ -243,17 +273,23 @@ export default function SolutionsPage() {
                         <CardTitle className="text-lg">Who It's For</CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-muted-foreground leading-relaxed">{solution.whoFor}</p>
+                        <p className="text-muted-foreground leading-relaxed">
+                          {solution.whoFor}
+                        </p>
                       </CardContent>
                     </Card>
 
-                    {/* How ClearIt Helps */}
+                    {/* How Utilso Helps */}
                     <Card className="border-l-4 border-l-success">
                       <CardHeader>
-                        <CardTitle className="text-lg">How ClearIt Helps</CardTitle>
+                        <CardTitle className="text-lg">
+                          How Utilso Helps
+                        </CardTitle>
                       </CardHeader>
                       <CardContent>
-                        <p className="text-muted-foreground leading-relaxed">{solution.solution}</p>
+                        <p className="text-muted-foreground leading-relaxed">
+                          {solution.solution}
+                        </p>
                       </CardContent>
                     </Card>
                   </div>
@@ -263,29 +299,39 @@ export default function SolutionsPage() {
                     {/* Tools Involved */}
                     <Card>
                       <CardHeader>
-                        <CardTitle className="text-lg">Tools Involved</CardTitle>
-                        <CardDescription>Key tools that solve this problem</CardDescription>
+                        <CardTitle className="text-lg">
+                          Tools Involved
+                        </CardTitle>
+                        <CardDescription>
+                          Key tools that solve this problem
+                        </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-3">
                         {solution.tools.map((tool) => {
                           const ToolIcon = tool.icon;
                           return (
-                            <Link 
-                              key={tool.name} 
+                            <Link
+                              key={tool.name}
                               href={`/category/${tool.category}`}
                               className="block"
                             >
                               <div className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted transition-smooth group">
-                                <div 
+                                <div
                                   className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0"
-                                  style={{ backgroundColor: `hsl(var(--category-${tool.category}) / 0.1)` }}
+                                  style={{
+                                    backgroundColor: `hsl(var(--category-${tool.category}) / 0.1)`,
+                                  }}
                                 >
-                                  <ToolIcon 
-                                    className="h-5 w-5" 
-                                    style={{ color: `hsl(var(--category-${tool.category}))` }}
+                                  <ToolIcon
+                                    className="h-5 w-5"
+                                    style={{
+                                      color: `hsl(var(--category-${tool.category}))`,
+                                    }}
                                   />
                                 </div>
-                                <span className="flex-1 font-medium text-foreground">{tool.name}</span>
+                                <span className="flex-1 font-medium text-foreground">
+                                  {tool.name}
+                                </span>
                                 <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:translate-x-1 transition-smooth" />
                               </div>
                             </Link>
@@ -297,7 +343,9 @@ export default function SolutionsPage() {
                     {/* Example Workflow */}
                     <Card>
                       <CardHeader>
-                        <CardTitle className="text-lg">Example Workflow</CardTitle>
+                        <CardTitle className="text-lg">
+                          Example Workflow
+                        </CardTitle>
                         <CardDescription>Step-by-step process</CardDescription>
                       </CardHeader>
                       <CardContent>
@@ -307,7 +355,9 @@ export default function SolutionsPage() {
                               <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center shrink-0 text-primary-foreground text-xs font-bold">
                                 {idx + 1}
                               </div>
-                              <p className="text-muted-foreground flex-1 pt-0.5">{step}</p>
+                              <p className="text-muted-foreground flex-1 pt-0.5">
+                                {step}
+                              </p>
                             </li>
                           ))}
                         </ol>
@@ -331,7 +381,7 @@ export default function SolutionsPage() {
                 Ready to solve your digital problems?
               </h2>
               <p className="text-muted-foreground">
-                Start using ClearIt tools now. No sign-up required.
+                Start using Utilso tools now. No sign-up required.
               </p>
             </div>
             <Link href="/">

@@ -1,31 +1,33 @@
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Documentation for ClearIt - Complete Tool Guides & Tutorials",
-  description: "Comprehensive documentation for ClearIt tools. Learn how to use word counter, image compressor, PDF merger, CSV converter, HTML minifier, and more. Step-by-step guides, tips, best practices, and FAQs for every tool.",
+  title: "Documentation for Utilso - Complete Tool Guides & Tutorials",
+  description:
+    "Comprehensive documentation for Utilso tools. Learn how to use word counter, image compressor, PDF merger, CSV converter, HTML minifier, and more. Step-by-step guides, tips, best practices, and FAQs for every tool.",
   keywords: [
-    "clearit documentation",
-    "documentation for clearit",
-    "clearit guides",
-    "clearit tutorials",
-    "clearit how to",
-    "clearit help",
+    "utilso documentation",
+    "documentation for utilso",
+    "utilso guides",
+    "utilso tutorials",
+    "utilso how to",
+    "utilso help",
     "word counter guide",
     "image compressor tutorial",
     "PDF merger documentation",
     "CSV converter guide",
     "HTML minifier tutorial",
-    "clearit tool documentation"
+    "utilso tool documentation",
   ],
   openGraph: {
-    title: "Documentation for ClearIt - Complete Tool Guides & Tutorials",
-    description: "Comprehensive guides for every ClearIt tool. Learn how to use each tool effectively, discover best practices, and troubleshoot common issues.",
+    title: "Documentation for Utilso - Complete Tool Guides & Tutorials",
+    description:
+      "Comprehensive guides for every Utilso tool. Learn how to use each tool effectively, discover best practices, and troubleshoot common issues.",
     url: "/documentation",
     type: "website",
   },
   twitter: {
-    title: "Documentation for ClearIt",
-    description: "Comprehensive guides for every ClearIt tool.",
+    title: "Documentation for Utilso",
+    description: "Comprehensive guides for every Utilso tool.",
   },
   alternates: {
     canonical: "/documentation",

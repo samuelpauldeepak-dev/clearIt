@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://clearit.spdic.com";
+  const baseUrl = "https://utilso.spdic.com";
 
   const categories = ["text", "image", "pdf", "data", "web"];
 

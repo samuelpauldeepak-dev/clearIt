@@ -350,8 +350,7 @@ const documentation: Documentation[] = [
 
 export default function DocumentationPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const baseUrl =
-    process.env.NEXT_PUBLIC_APP_URL || "https://clearit.spdic.com";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://utilso.spdic.com";
 
   const filteredDocs = documentation.filter(
     (doc) =>
@@ -362,9 +361,9 @@ export default function DocumentationPage() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: "Documentation for ClearIt",
+    name: "Documentation for Utilso",
     description:
-      "Comprehensive guides for every ClearIt tool. Learn how to use each tool effectively, discover best practices, and troubleshoot common issues.",
+      "Comprehensive guides for every Utilso tool. Learn how to use each tool effectively, discover best practices, and troubleshoot common issues.",
     url: `${baseUrl}/documentation`,
     mainEntity: {
       "@type": "ItemList",
@@ -420,7 +419,7 @@ export default function DocumentationPage() {
             Tool Documentation
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Comprehensive guides for every ClearIt tool. Learn how to use each
+            Comprehensive guides for every Utilso tool. Learn how to use each
             tool effectively, discover best practices, and troubleshoot common
             issues.
           </p>
@@ -439,7 +438,7 @@ export default function DocumentationPage() {
                 </h2>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                ClearIt is designed with a <strong>privacy-first</strong>{" "}
+                Utilso is designed with a <strong>privacy-first</strong>{" "}
                 philosophy. Unlike other online tools, your files are
                 <strong> never uploaded to our servers</strong>. All processing
                 happens locally within your browser using modern Web APIs and

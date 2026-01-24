@@ -74,7 +74,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
               <span className="text-primary-foreground font-bold text-lg">C</span>
             </div> */}
             <span className="text-xl md:text-2xl lg:text-3xl font-bold text-primary bg-gradient-to-t  tracking-tighter ">
-              ClearIt
+              Utilso
             </span>
           </Link>
 
@@ -202,7 +202,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="gap-2 px-3 h-7 sm:h-9 text-xs sm:text-sm"
+                  className="gap-2 px-3 h-9 sm:h-10 text-xs sm:text-sm"
                 >
                   <LogIn className="h-3.5 w-3.5 md:h-4 md:w-4" />
                   <span className="hidden sm:inline">Login</span>
@@ -211,7 +211,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
               <Link href="/signup" onClick={() => setSidebarOpen(false)}>
                 <Button
                   size="sm"
-                  className="bg-primary hover:bg-primary-hover px-3 sm:px-4 h-7 sm:h-9 text-xs sm:text-sm"
+                  className="bg-primary hover:bg-primary-hover px-3 sm:px-4 h-9 sm:h-10 text-xs sm:text-sm"
                 >
                   Sign Up
                 </Button>

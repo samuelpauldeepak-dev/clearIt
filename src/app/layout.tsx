@@ -6,11 +6,11 @@ import "@/app/globals.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL || "https://clearit.spdic.com",
+    process.env.NEXT_PUBLIC_APP_URL || "https://utilso.spdic.com",
   ),
   title: {
-    default: "ClearIt - Simple, Privacy-First Online Tools",
-    template: "%s | ClearIt",
+    default: "Utilso - Simple, Privacy-First Online Tools",
+    template: "%s | Utilso",
   },
   description:
     "Free online tools for text, images, PDFs, data, and web development. All tools work instantly in your browser with zero uploads. Privacy-first, open-source utilities.",
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
     "browser-based data tools",
     "web developer utilities",
   ],
-  authors: [{ name: "Samuel Paul Deepak", url: "https://spdic.com" }],
-  creator: "Samuel Paul Deepak",
-  publisher: "ClearIt",
+  authors: [{ name: "Utilso", url: "https://utilso.spdic.com" }],
+  creator: "Utilso",
+  publisher: "Utilso",
   formatDetection: {
     email: false,
     address: false,
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "/",
-    siteName: "ClearIt",
-    title: "ClearIt - Clear digital problems instantly",
+    siteName: "Utilso",
+    title: "Utilso - Clear digital problems instantly",
     description:
       "All-in-one browser toolkit: Convert, optimize, and clean your files without leaving your browser. 100% private, no accounts required.",
     images: [
@@ -50,16 +50,16 @@ export const metadata: Metadata = {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ClearIt - The Ultimate Browser Toolkit",
+        alt: "Utilso - The Ultimate Browser Toolkit",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "ClearIt - Professional Digital Tools",
+    title: "Utilso - Professional Digital Tools",
     description: "Fix files, clean data, convert formats — without friction.",
     images: ["/og-image.png"],
-    creator: "@samuelpauldeepak",
+    creator: "@utilso_app",
   },
   robots: {
     index: true,
@@ -88,7 +88,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ThemeProvider defaultTheme="light" storageKey="clearit-theme">
+        <ThemeProvider defaultTheme="light" storageKey="utilso-theme">
           <AuthProvider>
             <GlobalUIProvider>
               <Layout>{children}</Layout>

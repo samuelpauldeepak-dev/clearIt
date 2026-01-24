@@ -352,8 +352,7 @@ export default function ToolPage() {
     toast.info("Ready for new file");
   };
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_APP_URL || "https://clearit.spdic.com";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://utilso.spdic.com";
   const toolUrl = `${baseUrl}/tool/${categoryId}/${toolId}`;
 
   const structuredData = {

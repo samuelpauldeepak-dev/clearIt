@@ -107,7 +107,7 @@ export const useUserStore = create<UserState>()(
         }),
     }),
     {
-      name: "clearit-user-storage",
+      name: "utilso-user-storage",
     },
   ),
 );
