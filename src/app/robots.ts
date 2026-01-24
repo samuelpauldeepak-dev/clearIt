@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: ["/api/", "/profile/", "/settings/"],
     },
-    sitemap: "https://clearit.spdic.com/sitemap.xml",
+    sitemap: "https://utilso.spdic.com/sitemap.xml",
   };
 }

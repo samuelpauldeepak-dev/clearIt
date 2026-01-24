@@ -10,7 +10,7 @@ export function WelcomeTrigger() {
     // Show welcome popup
     showPopup({
       id: "welcome-popup",
-      title: "Welcome to ClearIt!",
+      title: "Welcome to Utilso!",
       message:
         "Your ultimate toolkit for solving digital problems instantly. Join thousands of users who trust us for their daily file and data challenges.",
       type: "welcome",

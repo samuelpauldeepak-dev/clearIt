@@ -74,27 +74,27 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
               <span className="text-primary-foreground font-bold text-lg">C</span>
             </div> */}
             <span className="text-xl md:text-2xl lg:text-3xl font-bold text-primary bg-gradient-to-t  tracking-tighter ">
-              ClearIt
+              Utilso
             </span>
           </Link>
 
           {/* Navigation Links */}
-          {/* <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link key={link.path} href={link.path}>
                 <Button
                   variant="ghost"
                   className={`${
                     pathname === link.path
-                      ? 'bg-muted text-foreground hover:text-white'
-                      : 'text-muted-foreground hover:text-foreground'
+                      ? "bg-muted text-foreground hover:text-white"
+                      : "text-muted-foreground hover:text-foreground"
                   }`}
                 >
                   {link.name}
                 </Button>
               </Link>
             ))}
-          </div> */}
+          </div>
         </div>
 
         {/* Right Section */}
@@ -177,15 +177,6 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
                     <span>Settings</span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild className="h-10 cursor-pointer">
-                  <Link
-                    href="/pricing"
-                    className="flex items-center gap-2 w-full"
-                  >
-                    <CreditCard className="h-4 w-4" />
-                    <span>Pricing</span>
-                  </Link>
-                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem
                   className="h-10 text-destructive hover:!text-white hover:!bg-destructive focus:text-destructive cursor-pointer flex items-center gap-2"
@@ -202,7 +193,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
                 <Button
                   variant="secondary"
                   size="sm"
-                  className="gap-2 px-3 h-7 sm:h-9 text-xs sm:text-sm"
+                  className="gap-2 px-3 h-9 sm:h-10 text-xs sm:text-sm"
                 >
                   <LogIn className="h-3.5 w-3.5 md:h-4 md:w-4" />
                   <span className="hidden sm:inline">Login</span>
@@ -211,7 +202,7 @@ export default function Navbar({ sidebarOpen, setSidebarOpen }: NavbarProps) {
               <Link href="/signup" onClick={() => setSidebarOpen(false)}>
                 <Button
                   size="sm"
-                  className="bg-primary hover:bg-primary-hover px-3 sm:px-4 h-7 sm:h-9 text-xs sm:text-sm"
+                  className="bg-primary hover:bg-primary-hover px-3 sm:px-4 h-9 sm:h-10 text-xs sm:text-sm"
                 >
                   Sign Up
                 </Button>

@@ -29,7 +29,7 @@ export default function AuthLayout({
                 </span>
               </div>
               <span className="text-5xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-br from-primary to-purple-600">
-                ClearIt
+                Utilso
               </span>
             </div>
           </Link> */}

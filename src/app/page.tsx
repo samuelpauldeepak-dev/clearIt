@@ -25,11 +25,11 @@ import { WelcomeTrigger } from "@/components/home/WelcomeTrigger";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "ClearIt - Free Online Tools for Text, Images, PDFs & Data",
+  title: "Utilso - Free Online Tools for Text, Images, PDFs & Data",
   description:
-    "ClearIt provides free, privacy-first online tools to fix files, clean data, and convert formats instantly. Word counter, image compressor, PDF merger, CSV converter, and more. All processing happens in your browser - no uploads, no accounts required.",
+    "Utilso provides free, privacy-first online tools to fix files, clean data, and convert formats instantly. Word counter, image compressor, PDF merger, CSV converter, and more. All processing happens in your browser - no uploads, no accounts required.",
   keywords: [
-    "clearit online tools",
+    "utilso online tools",
     "free word counter",
     "image compressor without upload",
     "secure PDF merger",
@@ -40,14 +40,14 @@ export const metadata: Metadata = {
     "safe data cleaning",
   ],
   openGraph: {
-    title: "ClearIt - Free Online Tools for Text, Images, PDFs & Data",
+    title: "Utilso - Free Online Tools for Text, Images, PDFs & Data",
     description:
       "Fix files, clean data, convert formats — without friction. Free online tools that work instantly in your browser.",
     url: "/",
     type: "website",
   },
   twitter: {
-    title: "ClearIt - Free Online Tools",
+    title: "Utilso - Free Online Tools",
     description: "Fix files, clean data, convert formats — without friction.",
   },
   alternates: {
@@ -125,10 +125,10 @@ export default function ToolsLanding() {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    name: "ClearIt",
+    name: "Utilso",
     description:
       "Free online tools for text, images, PDFs, data, and web development. All processing happens in your browser.",
-    url: process.env.NEXT_PUBLIC_APP_URL || "https://clearit.spdic.com",
+    url: process.env.NEXT_PUBLIC_APP_URL || "https://utilso.spdic.com",
     applicationCategory: "UtilityApplication",
     operatingSystem: "Web",
     offers: {
@@ -158,7 +158,7 @@ export default function ToolsLanding() {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: process.env.NEXT_PUBLIC_APP_URL || "https://clearit.spdic.com",
+        item: process.env.NEXT_PUBLIC_APP_URL || "https://utilso.spdic.com",
       },
     ],
   };
@@ -226,8 +226,8 @@ export default function ToolsLanding() {
           </h1>
 
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Fix files, clean data, convert formats — without friction. ClearIt
-            is your go-to toolkit for solving everyday digital challenges with
+            Fix files, clean data, convert formats — without friction. Utilso is
+            your go-to toolkit for solving everyday digital challenges with
             confidence.
           </p>
 
@@ -345,14 +345,14 @@ export default function ToolsLanding() {
               Frequently Asked Questions
             </h2>
             <p className="text-muted-foreground mt-2">
-              Common questions about ClearIt and our tools
+              Common questions about Utilso and our tools
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             <div className="space-y-3">
               <h3 className="text-lg font-semibold text-foreground">
-                Is ClearIt really free?
+                Is Utilso really free?
               </h3>
               <p className="text-muted-foreground leading-relaxed">
                 Yes, all our tools are completely free to use. We believe in
@@ -375,7 +375,7 @@ export default function ToolsLanding() {
                 Do I need an account?
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                No. You can use any tool on ClearIt immediately without
+                No. You can use any tool on Utilso immediately without
                 registering. We don't collect emails or personal information.
               </p>
             </div>
@@ -384,7 +384,7 @@ export default function ToolsLanding() {
                 Which browsers are supported?
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                ClearIt works best on modern browsers like Chrome, Firefox,
+                Utilso works best on modern browsers like Chrome, Firefox,
                 Safari, and Edge. Since we process data locally, we recommend
                 keeping your browser updated.
               </p>
@@ -396,7 +396,7 @@ export default function ToolsLanding() {
         <section className="bg-muted/30 rounded-xl p-8 md:p-12 text-center space-y-4">
           <h2 className="text-2xl font-bold text-foreground">Our Philosophy</h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Digital problems shouldn't require complex solutions. ClearIt
+            Digital problems shouldn't require complex solutions. Utilso
             provides straightforward, powerful tools that work instantly in your
             browser. No uploads, no accounts, no hassle — just results.
           </p>

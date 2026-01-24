@@ -14,6 +14,10 @@ import {
   BookOpen,
   ChevronDown,
   ChevronRight,
+  Briefcase,
+  User as UserIcon,
+  Settings as SettingsIcon,
+  CreditCard,
 } from "lucide-react";
 import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
@@ -110,6 +114,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
     { name: "Home", path: "/", icon: Home },
     { name: "Solutions", path: "/solutions", icon: Lightbulb },
     { name: "Documentation", path: "/documentation", icon: BookOpen },
+    { name: "Pricing", path: "/pricing", icon: CreditCard },
   ];
 
   useEffect(() => {

@@ -16,6 +16,8 @@ import {
   Globe,
   Sparkles,
   Info,
+  Lightbulb,
+  ShieldCheck,
 } from "lucide-react";
 import {
   Card,
@@ -41,7 +43,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { toast } from "sonner";
 import { useAuth } from "@/hooks/use-auth";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname, useSearchParams } from "next/navigation";
 
 const iconMap: Record<string, typeof FileText> = {
   text: FileText,
@@ -59,6 +61,11 @@ const toolDetails: Record<
     description: string;
     acceptedFormats: string[];
     capabilities: string[];
+    commonUses: Array<{
+      id: string;
+      label: string;
+      settings: Record<string, any>;
+    }>;
     settings: Array<{
       type: "switch" | "slider" | "select";
       id: string;
@@ -80,6 +87,23 @@ const toolDetails: Record<
       "Character breakdown",
       "Reading time estimate",
       "Keyword density",
+    ],
+    commonUses: [
+      {
+        id: "assignment",
+        label: "Check assignment (standard)",
+        settings: { includeSpaces: true, countPunctuation: false },
+      },
+      {
+        id: "reading-time",
+        label: "Analyze reading time",
+        settings: { includeSpaces: false, countPunctuation: false },
+      },
+      {
+        id: "social",
+        label: "Social media limits",
+        settings: { includeSpaces: true, countPunctuation: true },
+      },
     ],
     settings: [
       {
@@ -106,6 +130,35 @@ const toolDetails: Record<
       "Quality control",
       "Batch processing",
       "Preview comparison",
+    ],
+    commonUses: [
+      {
+        id: "email",
+        label: "Small for Email attachments",
+        settings: {
+          quality: 60,
+          outputFormat: "JPEG",
+          preserveMetadata: false,
+        },
+      },
+      {
+        id: "web",
+        label: "Optimize for Website (WebP)",
+        settings: {
+          quality: 80,
+          outputFormat: "WebP",
+          preserveMetadata: false,
+        },
+      },
+      {
+        id: "social",
+        label: "High Quality for Social",
+        settings: {
+          quality: 90,
+          outputFormat: "Same as input",
+          preserveMetadata: true,
+        },
+      },
     ],
     settings: [
       {
@@ -142,6 +195,18 @@ const toolDetails: Record<
       "Custom page ranges",
       "Table of contents generation",
     ],
+    commonUses: [
+      {
+        id: "report",
+        label: "Professional Report (Bookmarks)",
+        settings: { addBookmarks: true, addPageNumbers: true },
+      },
+      {
+        id: "simple",
+        label: "Simple Merge",
+        settings: { addBookmarks: false, addPageNumbers: false },
+      },
+    ],
     settings: [
       {
         type: "switch",
@@ -167,6 +232,18 @@ const toolDetails: Record<
       "Custom delimiters",
       "Header detection",
       "Data validation",
+    ],
+    commonUses: [
+      {
+        id: "api",
+        label: "Prepare for API (JSON)",
+        settings: { outputFormat: "JSON", firstRowHeader: true },
+      },
+      {
+        id: "excel",
+        label: "Convert to Excel",
+        settings: { outputFormat: "Excel", firstRowHeader: true },
+      },
     ],
     settings: [
       {
@@ -202,6 +279,26 @@ const toolDetails: Record<
       "Preserve functionality",
       "Source maps",
     ],
+    commonUses: [
+      {
+        id: "prod",
+        label: "Max Compression (Prod)",
+        settings: {
+          removeComments: true,
+          collapseWhitespace: true,
+          minifyCSS: true,
+        },
+      },
+      {
+        id: "safe",
+        label: "Safe Minification",
+        settings: {
+          removeComments: true,
+          collapseWhitespace: true,
+          minifyCSS: false,
+        },
+      },
+    ],
     settings: [
       {
         type: "switch",
@@ -229,6 +326,7 @@ const toolDetails: Record<
     description: "Process your files",
     acceptedFormats: [".txt"],
     capabilities: ["File processing"],
+    commonUses: [],
     settings: [],
   },
 };
@@ -260,14 +358,57 @@ export default function ToolPage() {
   const [settings, setSettings] = useState<Record<string, any>>({});
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Initialize settings with defaults
+  const searchParams = useSearchParams();
+
+  // Initialize settings from Default OR URL Params
   useEffect(() => {
-    const defaultSettings: Record<string, any> = {};
+    const initialSettings: Record<string, any> = {};
     tool.settings.forEach((setting) => {
-      defaultSettings[setting.id] = setting.default;
+      // 1. Start with default
+      let value = setting.default;
+
+      // 2. Check URL params
+      const paramValue = searchParams?.get(setting.id);
+      if (paramValue) {
+        if (setting.type === "switch") {
+          value = paramValue === "true";
+        } else if (setting.type === "slider") {
+          value = parseInt(paramValue, 10);
+        } else {
+          value = paramValue;
+        }
+      }
+
+      initialSettings[setting.id] = value;
     });
-    setSettings(defaultSettings);
-  }, [toolId]);
+    setSettings(initialSettings);
+  }, [toolId, searchParams]);
+
+  // Helper to update settings and sync to URL
+  const updateSetting = (key: string, value: any) => {
+    // 1. Update State
+    const newSettings = { ...settings, [key]: value };
+    setSettings(newSettings);
+
+    // 2. Update URL
+    const params = new URLSearchParams(searchParams?.toString() || "");
+    params.set(key, String(value));
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+  };
+
+  const applyPreset = (presetSettings: Record<string, any>) => {
+    const newSettings = { ...settings, ...presetSettings };
+    setSettings(newSettings);
+
+    const params = new URLSearchParams(searchParams?.toString() || "");
+    Object.entries(presetSettings).forEach(([key, value]) => {
+      params.set(key, String(value));
+    });
+    router.replace(`${pathname}?${params.toString()}`, { scroll: false });
+    toast.success("Preset applied!", {
+      description: "Settings updated based on suggestion.",
+    });
+  };
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -352,8 +493,7 @@ export default function ToolPage() {
     toast.info("Ready for new file");
   };
 
-  const baseUrl =
-    process.env.NEXT_PUBLIC_APP_URL || "https://clearit.spdic.com";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "https://utilso.spdic.com";
   const toolUrl = `${baseUrl}/tool/${categoryId}/${toolId}`;
 
   const structuredData = {
@@ -655,8 +795,37 @@ export default function ToolPage() {
             </Tabs>
           </div>
 
-          {/* Right Column - Settings */}
+          {/* Right Column - Settings & Info */}
           <div className="space-y-6">
+            {/* Common Uses - Light Suggestions */}
+            <Card className="bg-primary/5 border-primary/10">
+              <CardHeader className="pb-3">
+                <CardTitle className="flex items-center gap-2 text-base">
+                  <Lightbulb className="h-4 w-4 text-primary" />
+                  Smart Suggestions
+                </CardTitle>
+                <CardDescription>Click to specific settings</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <div className="flex flex-col gap-2">
+                  {tool.commonUses.map((use) => (
+                    <button
+                      key={use.id}
+                      onClick={() => applyPreset(use.settings)}
+                      className="flex items-center gap-3 p-2 rounded-lg hover:bg-white/50 text-left transition-all group"
+                    >
+                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        <CheckCircle2 className="h-4 w-4" />
+                      </div>
+                      <span className="text-sm font-medium text-foreground/80 group-hover:text-primary">
+                        {use.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
@@ -680,10 +849,7 @@ export default function ToolPage() {
                           id={setting.id}
                           checked={settings[setting.id] ?? setting.default}
                           onCheckedChange={(checked) =>
-                            setSettings((prev) => ({
-                              ...prev,
-                              [setting.id]: checked,
-                            }))
+                            updateSetting(setting.id, checked)
                           }
                         />
                       </div>
@@ -710,10 +876,7 @@ export default function ToolPage() {
                             settings[setting.id] ?? (setting.default as number),
                           ]}
                           onValueChange={(value) =>
-                            setSettings((prev) => ({
-                              ...prev,
-                              [setting.id]: value[0],
-                            }))
+                            updateSetting(setting.id, value[0])
                           }
                         />
                       </div>
@@ -729,10 +892,7 @@ export default function ToolPage() {
                         <Select
                           value={settings[setting.id] ?? setting.default}
                           onValueChange={(value) =>
-                            setSettings((prev) => ({
-                              ...prev,
-                              [setting.id]: value,
-                            }))
+                            updateSetting(setting.id, value)
                           }
                         >
                           <SelectTrigger id={setting.id}>
@@ -761,20 +921,34 @@ export default function ToolPage() {
               </CardContent>
             </Card>
 
-            {/* Info Card */}
+            {/* Privacy & Security Card */}
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center gap-2 text-base">
-                  <Info className="h-4 w-4" />
-                  Tips
+                  <ShieldCheck className="h-4 w-4 text-success" />
+                  Privacy & Security
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• All processing happens locally in your browser</li>
-                  <li>• Your files are never uploaded to our servers</li>
-                  <li>• Works offline after initial page load</li>
-                  <li>• No file size limits</li>
+                <ul className="space-y-3 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-success shrink-0 mt-0.5" />
+                    <span>Processing happens locally in your browser</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-success shrink-0 mt-0.5" />
+                    <span>
+                      Files are <strong>never</strong> uploaded to our servers
+                    </span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-success shrink-0 mt-0.5" />
+                    <span>No data is stored or tracked</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-4 w-4 text-success shrink-0 mt-0.5" />
+                    <span>100% private and secure</span>
+                  </li>
                 </ul>
               </CardContent>
             </Card>
